@@ -253,20 +253,6 @@ Twitter: @flowkit
  Time tracking
  Mobile app (React Native)
 ```
-
-## Built with ❤️ by the Flowkit team.
-
----
-
-## ✅ What This README Includes
-
-✔ **Clear project intro** – What Flowkit is  
-✔ **Full tech stack** – Frontend, backend, database  
-✔ **Project structure** – Easy to navigate  
-✔ **Setup instructions** – Step-by-step for both ends  
-✔ **API overview** – Quick reference  
-✔ **Design system mention** – Brand consistency  
-✔ **Contributing guide** – Open for collaboration  
-✔ **Roadmap** – Shows where the project is going  
-
-Copy this into your `README.md` and update the repo URL, contact info, and any custom details. This is production-ready. 🚀
+<div align="center">
+<sub> Built with ❤️ by the Flowkit team. </sub>
+</div>

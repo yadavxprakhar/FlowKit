@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { LayoutDashboard, CheckCircle } from 'lucide-react';
+import { CheckCircle2, Zap, Shield, Sparkles, Rocket } from 'lucide-react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
@@ -15,94 +15,111 @@ const PricingPage = () => {
       features: ["Flow List access", "Basic Huddle chat", "Up to 3 active projects", "Community support"],
       cta: "Start for free",
       highlighted: false,
-      buttonClass: "bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark text-text-primary-light dark:text-text-primary-dark hover:border-primary dark:hover:border-primary"
+      buttonClass: "bg-white/5 hover:bg-white/10 text-white border border-white/10"
     },
     {
       name: "Pro Kit",
       description: "Everything you need to get your team in flow.",
       price: annual ? "12" : "15",
-      features: ["Stack Board access", "Unlimited projects", "Timer & Time tracking", "Nudge reminders", "Priority email support"],
-      cta: "Get Pro",
+      features: ["Stack Board access", "Unlimited projects", "Timer & Time tracking", "Nudge reminders", "Priority support"],
+      cta: "Get Pro Now",
       highlighted: true,
-      buttonClass: "bg-primary hover:bg-primary-hover text-white shadow-md hover:shadow-lg"
+      buttonClass: "bg-blue-600 hover:bg-blue-500 text-white shadow-2xl shadow-blue-500/20"
     },
     {
       name: "Scale Kit",
       description: "Advanced controls for growing organizations.",
       price: annual ? "29" : "39",
-      features: ["Everything in Pro", "Advanced Kit Settings", "Unlimited file attachments", "Custom workflows", "24/7 dedicated support"],
+      features: ["Everything in Pro", "Advanced Kit Settings", "Unlimited attachments", "Custom workflows", "24/7 support"],
       cta: "Contact Sales",
       highlighted: false,
-      buttonClass: "bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark text-text-primary-light dark:text-text-primary-dark hover:border-primary dark:hover:border-primary"
+      buttonClass: "bg-white/5 hover:bg-white/10 text-white border border-white/10"
     }
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-bg-light dark:bg-bg-dark text-text-secondary-light dark:text-text-secondary-dark font-sans transition-colors duration-200">
-      
+    <div className="min-h-screen bg-[#020617] text-slate-300 font-sans selection:bg-blue-500/30 overflow-x-hidden">
+      {/* Background Glows */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-600/10 rounded-full blur-[120px] animate-pulse"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-purple-600/10 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '2s' }}></div>
+      </div>
+
       <Navbar />
 
-      {/* Header */}
-      <main className="flex-grow max-w-6xl mx-auto px-6 py-24 w-full">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-text-primary-light dark:text-text-primary-dark mb-6">
-            Simple, transparent pricing
+      <main className="relative pt-40 pb-24 px-6">
+        <div className="max-w-4xl mx-auto text-center mb-20">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8">
+            <Sparkles size={14} className="text-blue-400" />
+            <span className="text-xs font-bold tracking-widest uppercase text-blue-400">Flexible Plans</span>
+          </div>
+          <h1 className="text-5xl md:text-7xl font-black text-white mb-8 tracking-tight">
+            Simple, transparent <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">pricing.</span>
           </h1>
-          <p className="text-lg text-text-secondary-light dark:text-text-secondary-dark max-w-2xl mx-auto mb-10">
-            No hidden fees. No surprise charges. Just the tools you need to do your best work.
-          </p>
-
+          
           {/* Toggle */}
-          <div className="flex items-center justify-center gap-3">
-            <span className={`text-sm font-medium ${!annual ? 'text-text-primary-light dark:text-text-primary-dark' : 'text-text-muted-light dark:text-text-muted-dark'}`}>Monthly</span>
+          <div className="flex items-center justify-center gap-4 mt-12">
+            <span className={`text-sm font-bold ${!annual ? 'text-white' : 'text-slate-500'}`}>Monthly</span>
             <button 
               onClick={() => setAnnual(!annual)}
-              className="relative inline-flex h-6 w-11 items-center rounded-full bg-primary transition-colors focus:outline-none"
+              className="relative inline-flex h-8 w-14 items-center rounded-full bg-white/5 border border-white/10 transition-colors focus:outline-none"
             >
-              <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${annual ? 'translate-x-6' : 'translate-x-1'}`} />
+              <div className={`h-6 w-6 rounded-full bg-blue-600 shadow-lg transform transition-transform ${annual ? 'translate-x-7' : 'translate-x-1'}`} />
             </button>
-            <span className={`text-sm font-medium flex items-center gap-2 ${annual ? 'text-text-primary-light dark:text-text-primary-dark' : 'text-text-muted-light dark:text-text-muted-dark'}`}>
-              Annually <span className="text-xs text-success bg-success/10 px-2 py-0.5 rounded-full">Save 20%</span>
+            <span className={`text-sm font-bold flex items-center gap-2 ${annual ? 'text-white' : 'text-slate-500'}`}>
+              Annually <span className="text-[10px] text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-full border border-emerald-400/20">Save 20%</span>
             </span>
           </div>
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
           {tiers.map((tier, index) => (
-            <div key={index} className={`relative flex flex-col p-8 rounded-2xl bg-surface-light dark:bg-surface-dark border ${tier.highlighted ? 'border-primary shadow-xl ring-1 ring-primary/50 scale-105 z-10' : 'border-border-light dark:border-border-dark shadow-md'}`}>
+            <div key={index} className={`group relative flex flex-col p-10 rounded-[40px] border transition-all duration-500 ${
+              tier.highlighted 
+                ? 'bg-[#0f172a] border-blue-500/50 shadow-2xl scale-105 z-10' 
+                : 'bg-white/[0.02] border-white/5 hover:border-white/10 hover:bg-white/[0.04]'
+            }`}>
               {tier.highlighted && (
-                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                  <span className="bg-primary text-white text-xs font-bold uppercase tracking-wider py-1 px-3 rounded-full">
-                    Most Popular
-                  </span>
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-[10px] font-black uppercase tracking-[0.2em] py-1.5 px-4 rounded-full shadow-xl">
+                  Most Popular
                 </div>
               )}
               
-              <div className="mb-8">
-                <h3 className="text-xl font-bold text-text-primary-light dark:text-text-primary-dark mb-2">{tier.name}</h3>
-                <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark h-10">{tier.description}</p>
+              <div className="mb-10 text-center">
+                <h3 className="text-2xl font-bold text-white mb-2">{tier.name}</h3>
+                <p className="text-sm text-slate-500 h-10 leading-relaxed">{tier.description}</p>
               </div>
 
-              <div className="mb-8 flex items-baseline text-text-primary-light dark:text-text-primary-dark">
-                <span className="text-5xl font-bold tracking-tight">${tier.price}</span>
-                {tier.price !== "0" && <span className="text-text-muted-light ml-1 font-medium">/mo</span>}
+              <div className="mb-10 flex flex-col items-center">
+                <div className="flex items-baseline text-white">
+                  <span className="text-6xl font-black tracking-tighter">${tier.price}</span>
+                  {tier.price !== "0" && <span className="text-slate-500 ml-2 font-bold">/mo</span>}
+                </div>
               </div>
 
-              <ul className="flex-1 space-y-4 mb-8">
+              <div className="space-y-5 mb-10">
                 {tier.features.map((feature, fIndex) => (
-                  <li key={fIndex} className="flex items-start gap-3 text-sm text-text-secondary-light dark:text-text-secondary-dark">
-                    <CheckCircle size={18} className="text-success shrink-0 mt-0.5" />
+                  <div key={fIndex} className="flex items-center gap-3 text-sm font-medium text-slate-400">
+                    <CheckCircle2 size={18} className="text-emerald-500 shrink-0" />
                     <span>{feature}</span>
-                  </li>
+                  </div>
                 ))}
-              </ul>
+              </div>
 
-              <Link to="/register" className={`w-full py-3 px-4 rounded-lg text-center font-medium transition-all ${tier.buttonClass}`}>
+              <Link to="/register" className={`w-full py-5 px-6 rounded-2xl text-center font-black transition-all active:scale-95 ${tier.buttonClass}`}>
                 {tier.cta}
               </Link>
             </div>
           ))}
+        </div>
+
+        {/* FAQ Section Placeholder */}
+        <div className="mt-40 text-center">
+          <Shield className="text-blue-500/20 mx-auto mb-6" size={48} />
+          <p className="text-slate-500 font-bold mb-2">Secure Payments</p>
+          <p className="text-xs text-slate-600">Encrypted by Stripe. Cancel anytime.</p>
         </div>
       </main>
 
@@ -112,3 +129,4 @@ const PricingPage = () => {
 };
 
 export default PricingPage;
+

@@ -1,65 +1,70 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { LayoutDashboard } from 'lucide-react';
+import { LayoutDashboard, Twitter, GitHub, Linkedin, Mail } from 'lucide-react';
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-surface-light dark:bg-surface-dark border-t border-border-light dark:border-border-dark pt-16 pb-8 px-12 mt-auto">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+    <footer className="w-full bg-[#020617] border-t border-white/5 pt-20 pb-10 px-6">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-16 mb-20">
         {/* Logo & Brand */}
-        <div className="col-span-1 md:col-span-1 flex flex-col gap-4">
-          <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <img src="/logo.png" alt="FlowKit Logo" className="w-6 h-6 object-contain rounded shadow-sm" />
-            <span className="text-lg font-bold text-text-primary-light dark:text-text-primary-dark">Flowkit</span>
+        <div className="md:col-span-4 space-y-6">
+          <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity group">
+            <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:rotate-6 transition-transform">
+              <LayoutDashboard className="text-white w-6 h-6" />
+            </div>
+            <span className="text-2xl font-black text-white tracking-tighter">Flowkit</span>
           </Link>
-          <p className="text-sm text-text-muted-light dark:text-text-secondary-dark">
-            Built for teams who want to move fast without breaking things.
+          <p className="text-slate-500 text-lg leading-relaxed max-w-xs">
+            The unified workspace for high-velocity teams. Reclaim your focus.
           </p>
         </div>
 
         {/* Links */}
-        <div className="flex flex-col gap-3">
-          <h4 className="font-semibold text-text-primary-light dark:text-text-primary-dark mb-2">Product</h4>
-          <a href="#" className="text-sm hover:text-primary transition-colors">Features</a>
-          <a href="#" className="text-sm hover:text-primary transition-colors">Pricing</a>
-          <Link to="/integrations" className="text-sm hover:text-primary transition-colors">Integrations</Link>
+        <div className="md:col-span-2 space-y-6">
+          <h4 className="text-white font-bold tracking-tight">Product</h4>
+          <div className="flex flex-col gap-4">
+            <Link to="/features" className="text-slate-500 hover:text-white transition-colors">Features</Link>
+            <Link to="/pricing" className="text-slate-500 hover:text-white transition-colors">Pricing</Link>
+            <Link to="/integrations" className="text-slate-500 hover:text-white transition-colors">Integrations</Link>
+          </div>
         </div>
 
-        <div className="flex flex-col gap-3">
-          <h4 className="font-semibold text-text-primary-light dark:text-text-primary-dark mb-2">Company</h4>
-          <Link to="/about" className="text-sm hover:text-primary transition-colors">About</Link>
-          <a href="#" className="text-sm hover:text-primary transition-colors">Careers</a>
-          <a href="#" className="text-sm hover:text-primary transition-colors">Contact</a>
+        <div className="md:col-span-2 space-y-6">
+          <h4 className="text-white font-bold tracking-tight">Company</h4>
+          <div className="flex flex-col gap-4">
+            <Link to="/about" className="text-slate-500 hover:text-white transition-colors">About</Link>
+            <a href="#" className="text-slate-500 hover:text-white transition-colors">Careers</a>
+            <a href="#" className="text-slate-500 hover:text-white transition-colors">Contact</a>
+          </div>
         </div>
 
-        <div className="flex flex-col gap-3">
-          <h4 className="font-semibold text-text-primary-light dark:text-text-primary-dark mb-2">Resources</h4>
-          <a href="#" className="text-sm hover:text-primary transition-colors">Blog</a>
-          <a href="#" className="text-sm hover:text-primary transition-colors">Docs</a>
-          <a href="#" className="text-sm hover:text-primary transition-colors">Support</a>
+        <div className="md:col-span-2 space-y-6">
+          <h4 className="text-white font-bold tracking-tight">Resources</h4>
+          <div className="flex flex-col gap-4">
+            <Link to="/privacy" className="text-slate-500 hover:text-white transition-colors">Privacy</Link>
+            <Link to="/terms" className="text-slate-500 hover:text-white transition-colors">Terms</Link>
+            <Link to="/security" className="text-slate-500 hover:text-white transition-colors">Security</Link>
+          </div>
+        </div>
+
+        <div className="md:col-span-2 space-y-6">
+          <h4 className="text-white font-bold tracking-tight">Social</h4>
+          <div className="flex flex-col gap-4">
+            <a href="#" className="flex items-center gap-2 text-slate-500 hover:text-white transition-colors"><Twitter size={16} /> Twitter</a>
+            <a href="#" className="flex items-center gap-2 text-slate-500 hover:text-white transition-colors"><Linkedin size={16} /> LinkedIn</a>
+            <a href="#" className="flex items-center gap-2 text-slate-500 hover:text-white transition-colors"><GitHub size={16} /> GitHub</a>
+          </div>
         </div>
       </div>
 
       {/* Bottom Bar */}
-      <div className="max-w-6xl mx-auto pt-8 border-t border-border-light dark:border-border-dark flex flex-col md:flex-row justify-between items-center gap-4">
-        <p className="text-sm text-text-muted-light dark:text-text-secondary-dark">
-          © 2024 Flowkit. All rights reserved.
+      <div className="max-w-7xl mx-auto pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+        <p className="text-sm text-slate-600 font-medium">
+          © 2024 Flowkit Labs Inc. All rights reserved.
         </p>
-        <div className="flex gap-6 text-sm">
-          <Link to="/privacy" className="hover:text-primary transition-colors">Privacy</Link>
-          <Link to="/terms" className="hover:text-primary transition-colors">Terms</Link>
-          <Link to="/security" className="hover:text-primary transition-colors">Security</Link>
-        </div>
-        <div className="flex gap-4">
-          <a href="#" className="text-text-muted-light hover:text-primary dark:text-text-secondary-dark dark:hover:text-primary transition-colors">
-            Twitter
-          </a>
-          <a href="#" className="text-text-muted-light hover:text-primary dark:text-text-secondary-dark dark:hover:text-primary transition-colors">
-            LinkedIn
-          </a>
-          <a href="#" className="text-text-muted-light hover:text-primary dark:text-text-secondary-dark dark:hover:text-primary transition-colors">
-            GitHub
-          </a>
+        <div className="flex items-center gap-2 text-slate-700 text-xs font-bold uppercase tracking-widest">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+          All Systems Operational
         </div>
       </div>
     </footer>
@@ -67,3 +72,4 @@ const Footer = () => {
 };
 
 export default Footer;
+

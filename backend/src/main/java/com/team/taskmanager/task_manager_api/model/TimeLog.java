@@ -22,7 +22,9 @@ public class TimeLog {
     private Long id;
 
     @Column(nullable = false)
-    private Integer durationMinutes;
+    private LocalDateTime startTime;
+
+    private LocalDateTime endTime;
 
     private String description;
 

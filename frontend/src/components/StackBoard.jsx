@@ -1,0 +1,64 @@
+import React from 'react';
+import TaskCard from './TaskCard';
+import { Plus, MoreHorizontal } from 'lucide-react';
+
+const StackBoard = ({ tasks, isLoading, onTaskSelect }) => {
+  const columns = [
+    { title: 'Todo', status: 'TODO', color: 'bg-slate-500' },
+    { title: 'In Progress', status: 'IN_PROGRESS', color: 'bg-blue-600' },
+    { title: 'Done', status: 'DONE', color: 'bg-emerald-500' },
+  ];
+
+  if (isLoading) {
+    return (
+      <div className="flex-1 flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-blue-600/20 border-t-blue-600 rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex-1 overflow-x-auto p-8 flex gap-6">
+      {columns.map((column) => (
+        <div key={column.status} className="flex-shrink-0 w-[350px] flex flex-col">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
+              <div className={`w-2 h-2 rounded-full ${column.color}`}></div>
+              <h3 className="text-white font-bold tracking-tight">{column.title}</h3>
+              <span className="bg-white/5 text-slate-500 text-xs px-2 py-0.5 rounded-full border border-white/5 font-medium">
+                {tasks.filter(t => t.status === column.status).length}
+              </span>
+            </div>
+            <div className="flex items-center gap-1">
+              <button className="p-1.5 hover:bg-white/5 rounded text-slate-500 transition-colors">
+                <Plus size={18} />
+              </button>
+              <button className="p-1.5 hover:bg-white/5 rounded text-slate-500 transition-colors">
+                <MoreHorizontal size={18} />
+              </button>
+            </div>
+          </div>
+
+          <div className="flex-1 space-y-4 min-h-[500px]">
+            {tasks
+              .filter((task) => task.status === column.status)
+              .map((task) => (
+                <div key={task.id} onClick={() => onTaskSelect(task)}>
+                  <TaskCard task={task} />
+                </div>
+              ))}
+            
+            {/* Drop Zone / Empty Column State */}
+            {tasks.filter(t => t.status === column.status).length === 0 && (
+              <div className="h-32 border-2 border-dashed border-white/5 rounded-2xl flex items-center justify-center text-slate-600 text-sm italic font-medium">
+                No tasks yet
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default StackBoard;

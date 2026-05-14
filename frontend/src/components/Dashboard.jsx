@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import ProjectSidebar from './ProjectSidebar';
 import StackBoard from './StackBoard';
@@ -12,6 +12,7 @@ import CalendarView from './CalendarView';
 import FilesView from './FilesView';
 import SettingsModal from './SettingsModal';
 import UserMenu from './UserMenu';
+import TimesheetView from './TimesheetView';
 import { Search, Bell, User, ChevronDown, Share2, Filter, Plus } from 'lucide-react';
 
 const Dashboard = () => {
@@ -28,6 +29,10 @@ const Dashboard = () => {
   const [settingsTab, setSettingsTab] = useState('profile');
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isNewProjectModalOpen, setIsNewProjectModalOpen] = useState(false);
+  const [newProjectName, setNewProjectName] = useState('');
+  const [newProjectClient, setNewProjectClient] = useState('');
+  const [isCreatingProject, setIsCreatingProject] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState(localStorage.getItem('userAvatar'));
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -37,7 +42,8 @@ const Dashboard = () => {
     return () => window.removeEventListener('avatarUpdate', updateAvatar);
   }, []);
   const [activeTimerTask, setActiveTimerTask] = useState(null); // {id, title}
-  const [currentView, setCurrentView] = useState('BOARD'); // 'BOARD' or 'HUDDLE'
+  const location = useLocation();
+  const [currentView, setCurrentView] = useState(location.state?.view || 'BOARD'); // BOARD, LIST, CALENDAR, FILES, HUDDLE, TIMER, NUDGE
   const navigate = useNavigate();
 
   const token = localStorage.getItem('token');
@@ -132,6 +138,33 @@ const Dashboard = () => {
     navigate('/login');
   };
 
+  const handleCreateProject = async (e) => {
+    e?.preventDefault();
+    if (!newProjectName.trim()) return;
+    
+    setIsCreatingProject(true);
+    try {
+      const response = await axios.post('http://localhost:8080/api/v1/projects', 
+        { 
+          name: newProjectName,
+          clientName: newProjectClient
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setProjects([...projects, response.data]);
+      setSelectedProjectId(response.data.id);
+      setIsNewProjectModalOpen(false);
+      setNewProjectName('');
+      setNewProjectClient('');
+      setCurrentView('BOARD');
+    } catch (err) {
+      console.error('Failed to create project:', err);
+      setError('Failed to create project. Please try again.');
+    } finally {
+      setIsCreatingProject(false);
+    }
+  };
+
   const currentProject = projects.find(p => p.id === selectedProjectId);
 
   // Determine actual display theme
@@ -151,12 +184,16 @@ const Dashboard = () => {
         selectedProjectId={selectedProjectId} 
         onSelectProject={(id) => {
           setSelectedProjectId(id);
+          setCurrentView('BOARD');
         }}
         onLogout={handleLogout}
         onSettingsClick={() => openSettings('profile')}
         isCollapsed={isSidebarCollapsed}
         setIsCollapsed={setIsSidebarCollapsed}
         theme={displayTheme}
+        currentView={currentView}
+        onViewChange={setCurrentView}
+        onCreateProject={() => setIsNewProjectModalOpen(true)}
       />
 
       <main className="flex-1 flex flex-col relative overflow-hidden bg-transparent">
@@ -194,6 +231,7 @@ const Dashboard = () => {
                 notifications={notifications} 
                 onClose={() => setIsNotificationsOpen(false)}
                 onMarkAsRead={handleMarkAsRead}
+                theme={displayTheme}
               />
             </div>
             <div className={`h-8 w-px mx-2 ${displayTheme === 'light' ? 'bg-slate-200' : 'bg-white/5'}`}></div>
@@ -228,17 +266,19 @@ const Dashboard = () => {
           <div>
             <div className="flex items-center gap-3 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2">
               <span>Projects</span>
-              <span className="text-slate-700">/</span>
+              <span className={displayTheme === 'light' ? 'text-slate-300' : 'text-slate-700'}>/</span>
               <span className="text-[#8B4513]">{currentProject?.name}</span>
             </div>
-            <h2 className="text-3xl font-bold text-white tracking-tight flex items-center gap-3">
+            <h2 className={`text-3xl font-bold tracking-tight flex items-center gap-3 ${displayTheme === 'light' ? 'text-slate-900' : 'text-white'}`}>
               {currentProject?.name || "Loading..."}
               <ChevronDown size={20} className="text-slate-600 mt-1 cursor-pointer" />
             </h2>
           </div>
 
           <div className="flex items-center gap-3">
-            <button className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-sm font-medium text-slate-300 hover:bg-white/10 transition-all">
+            <button className={`flex items-center gap-2 px-4 py-2 border rounded-xl text-sm font-medium transition-all ${
+              displayTheme === 'light' ? 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50' : 'bg-white/5 border-white/10 text-slate-300 hover:bg-white/10'
+            }`}>
               <Filter size={16} />
               Filters
             </button>
@@ -252,32 +292,28 @@ const Dashboard = () => {
         </div>
 
         {/* View Switcher */}
-        <div className="px-8 mt-6 flex gap-8 border-b border-white/5 z-10">
-          <button 
-            onClick={() => setCurrentView('BOARD')}
-            className={`pb-4 text-sm font-bold transition-all ${currentView === 'BOARD' ? 'text-[#8B4513] border-b-2 border-[#8B4513]' : 'text-slate-500 hover:text-slate-300'}`}>
-            Stack Board
-          </button>
-          <button 
-            onClick={() => setCurrentView('HUDDLE')}
-            className={`pb-4 text-sm font-bold transition-all ${currentView === 'HUDDLE' ? 'text-[#8B4513] border-b-2 border-[#8B4513]' : 'text-slate-500 hover:text-slate-300'}`}>
-            Huddle
-          </button>
-          <button 
-            onClick={() => setCurrentView('LIST')}
-            className={`pb-4 text-sm font-bold transition-all ${currentView === 'LIST' ? 'text-[#8B4513] border-b-2 border-[#8B4513]' : 'text-slate-500 hover:text-slate-300'}`}>
-            List View
-          </button>
-          <button 
-            onClick={() => setCurrentView('CALENDAR')}
-            className={`pb-4 text-sm font-bold transition-all ${currentView === 'CALENDAR' ? 'text-[#8B4513] border-b-2 border-[#8B4513]' : 'text-slate-500 hover:text-slate-300'}`}>
-            Calendar
-          </button>
-          <button 
-            onClick={() => setCurrentView('FILES')}
-            className={`pb-4 text-sm font-bold transition-all ${currentView === 'FILES' ? 'text-[#8B4513] border-b-2 border-[#8B4513]' : 'text-slate-500 hover:text-slate-300'}`}>
-            Files
-          </button>
+        <div className={`px-8 mt-6 flex gap-8 border-b z-10 overflow-x-auto ${displayTheme === 'light' ? 'border-slate-100' : 'border-white/5'}`}>
+          {[
+            { key: 'BOARD',    label: 'Stack Board' },
+            { key: 'LIST',     label: 'Flow List' },
+            { key: 'CALENDAR', label: 'Schedule' },
+            { key: 'FILES',    label: 'Clip' },
+            { key: 'HUDDLE',   label: 'Huddle' },
+            { key: 'TIMER',    label: 'Timer' },
+            { key: 'NUDGE',    label: 'Nudge' },
+          ].map(({ key, label }) => (
+            <button
+              key={key}
+              onClick={() => setCurrentView(key)}
+              className={`pb-4 text-sm font-bold whitespace-nowrap transition-all ${
+                currentView === key 
+                  ? 'text-[#8B4513] border-b-2 border-[#8B4513]' 
+                  : `text-slate-500 ${displayTheme === 'light' ? 'hover:text-slate-900' : 'hover:text-slate-300'}`
+              }`}
+            >
+              {label}
+            </button>
+          ))}
         </div>
 
         {error && (
@@ -302,6 +338,56 @@ const Dashboard = () => {
           {currentView === 'LIST' && <ListView tasks={filteredTasks} isLoading={isLoading} theme={displayTheme} />}
           {currentView === 'CALENDAR' && <CalendarView tasks={filteredTasks} theme={displayTheme} />}
           {currentView === 'FILES' && <FilesView theme={displayTheme} />}
+          {currentView === 'TIMER' && (
+            <TimesheetView 
+              projectId={selectedProjectId} 
+              projectName={currentProject?.name} 
+              clientName={currentProject?.clientName}
+              theme={displayTheme} 
+            />
+          )}
+          {currentView === 'NUDGE' && (
+            <div className="flex-1 overflow-y-auto p-8">
+              <div className="max-w-2xl mx-auto">
+                <h3 className={`text-2xl font-bold mb-6 ${displayTheme === 'light' ? 'text-slate-900' : 'text-white'}`}>Nudge — Notifications</h3>
+                {notifications.length === 0 ? (
+                  <div className={`p-12 border rounded-[40px] text-center ${
+                    displayTheme === 'light' ? 'bg-white border-slate-100' : 'bg-white/[0.02] border-white/5'
+                  }`}>
+                    <div className="w-12 h-12 rounded-2xl bg-orange-400/10 flex items-center justify-center mx-auto mb-4">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-orange-400"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                    </div>
+                    <p className="text-slate-500 font-medium">You're all caught up!</p>
+                    <p className="text-xs text-slate-600 mt-1">No pending notifications.</p>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    {notifications.map(n => (
+                      <div key={n.id} className={`p-5 rounded-2xl border flex items-start gap-4 transition-all ${
+                        n.isRead 
+                          ? `opacity-60 ${displayTheme === 'light' ? 'bg-slate-50 border-slate-200' : 'bg-white/[0.01] border-white/5'}` 
+                          : `${displayTheme === 'light' ? 'bg-white border-[#8B4513]/20 shadow-lg shadow-amber-900/5' : 'bg-[#1A120E] border-[#8B4513]/20'}`
+                      }`}>
+                        <div className={`w-2 h-2 rounded-full mt-2 shrink-0 ${n.isRead ? 'bg-slate-400' : 'bg-[#8B4513] animate-pulse'}`} />
+                        <div className="flex-1">
+                          <p className={`text-sm font-medium ${n.isRead ? 'text-slate-500' : (displayTheme === 'light' ? 'text-slate-900' : 'text-white')}`}>{n.message}</p>
+                          <p className="text-xs text-slate-500 mt-1">{new Date(n.createdAt).toLocaleString('en-IN')}</p>
+                        </div>
+                        {!n.isRead && (
+                          <button
+                            onClick={() => handleMarkAsRead(n.id)}
+                            className="text-xs text-[#20B2AA] hover:underline shrink-0 font-bold"
+                          >
+                            Mark read
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </main>
 
@@ -310,6 +396,7 @@ const Dashboard = () => {
         onClose={() => setIsTaskModalOpen(false)} 
         projectId={selectedProjectId}
         onTaskCreated={() => fetchTasks(selectedProjectId)}
+        theme={displayTheme}
       />
 
       <SettingsModal 
@@ -323,7 +410,72 @@ const Dashboard = () => {
       <TimerWidget 
         taskId={activeTimerTask?.id} 
         taskTitle={activeTimerTask?.title} 
+        theme={displayTheme}
       />
+
+      {/* New Project Modal */}
+      {isNewProjectModalOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          <div 
+            className={`absolute inset-0 backdrop-blur-sm ${displayTheme === 'light' ? 'bg-slate-900/20' : 'bg-[#0F0906]/80'}`}
+            onClick={() => setIsNewProjectModalOpen(false)}
+          />
+          <div className={`relative w-full max-w-md border rounded-[32px] p-8 shadow-2xl shadow-amber-900/20 ${
+            displayTheme === 'light' ? 'bg-white border-slate-200' : 'bg-[#1A120E] border-[#8B4513]/20'
+          }`}>
+            <h3 className={`text-2xl font-bold mb-2 ${displayTheme === 'light' ? 'text-slate-900' : 'text-white'}`}>Create New Project</h3>
+            <p className="text-slate-500 text-sm mb-8">Give your project a name to get started.</p>
+            
+            <form onSubmit={handleCreateProject} className="space-y-6">
+              <div>
+                <label className="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2 px-1">Project Name</label>
+                <input 
+                  autoFocus
+                  type="text"
+                  placeholder="e.g. Website Redesign"
+                  className={`w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#8B4513]/50 transition-all font-semibold ${
+                    displayTheme === 'light' ? 'bg-slate-50 border-slate-200 text-slate-900 placeholder-slate-400' : 'bg-white/5 border-white/10 text-white placeholder-slate-600'
+                  }`}
+                  value={newProjectName}
+                  onChange={(e) => setNewProjectName(e.target.value)}
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-bold text-slate-500 uppercase tracking-widest block mb-2 px-1">Client Name</label>
+                <input 
+                  type="text"
+                  placeholder="e.g. Acme Corp"
+                  className={`w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#8B4513]/50 transition-all font-semibold ${
+                    displayTheme === 'light' ? 'bg-slate-50 border-slate-200 text-slate-900 placeholder-slate-400' : 'bg-white/5 border-white/10 text-white placeholder-slate-600'
+                  }`}
+                  value={newProjectClient}
+                  onChange={(e) => setNewProjectClient(e.target.value)}
+                />
+              </div>
+              
+              <div className="flex gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setIsNewProjectModalOpen(false)}
+                  className={`flex-1 py-3 px-4 rounded-xl border font-bold transition-all ${
+                    displayTheme === 'light' ? 'border-slate-200 text-slate-500 hover:bg-slate-50' : 'border-white/10 text-slate-400 hover:bg-white/5'
+                  }`}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isCreatingProject || !newProjectName.trim()}
+                  className="flex-1 py-3 px-4 rounded-xl bg-[#8B4513] hover:bg-[#5D2E0A] text-white font-bold transition-all shadow-lg shadow-amber-900/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isCreatingProject ? 'Creating...' : 'Create Project'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

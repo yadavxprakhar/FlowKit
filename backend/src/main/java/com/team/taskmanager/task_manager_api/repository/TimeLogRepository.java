@@ -10,4 +10,5 @@ import java.util.List;
 public interface TimeLogRepository extends JpaRepository<TimeLog, Long> {
     List<TimeLog> findByTaskId(Long taskId);
     List<TimeLog> findByUserId(Long userId);
+    List<TimeLog> findByTaskProjectId(Long projectId);
 }

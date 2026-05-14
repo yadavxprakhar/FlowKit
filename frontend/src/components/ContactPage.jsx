@@ -37,7 +37,7 @@ const ContactPage = () => {
                 <div className="p-6 rounded-[28px] bg-white/[0.02] border border-white/5 hover:border-white/10 transition-colors">
                   <Mail className="text-[#8B4513] mb-4" size={24} />
                   <h3 className="text-white font-bold mb-1">Email Support</h3>
-                  <p className="text-sm text-[#8D6E63]">support@flowkit.com</p>
+                  <p className="text-sm text-[#8D6E63]">work.prakharyadav@gmail.com</p>
                 </div>
                 <div className="p-6 rounded-[28px] bg-white/[0.02] border border-white/5 hover:border-white/10 transition-colors">
                   <Globe className="text-[#20B2AA] mb-4" size={24} />
@@ -52,7 +52,7 @@ const ContactPage = () => {
                 <div className="p-6 rounded-[28px] bg-white/[0.02] border border-white/5 hover:border-white/10 transition-colors">
                   <Globe className="text-[#20B2AA] mb-4" size={24} />
                   <h3 className="text-white font-bold mb-1">Office</h3>
-                  <p className="text-sm text-[#8D6E63]">London, UK</p>
+                  <p className="text-sm text-[#8D6E63]">Delhi, India</p>
                 </div>
               </div>
 

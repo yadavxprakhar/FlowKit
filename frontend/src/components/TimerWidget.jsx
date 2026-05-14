@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Play, Square, Clock, ChevronUp, ChevronDown } from 'lucide-react';
 import axios from 'axios';
 
-const TimerWidget = ({ taskId, taskTitle }) => {
+const TimerWidget = ({ taskId, taskTitle, theme }) => {
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
   const [logId, setLogId] = useState(null);
@@ -57,27 +57,29 @@ const TimerWidget = ({ taskId, taskTitle }) => {
   if (!taskId && !isActive) return null;
 
   return (
-    <div className={`fixed bottom-8 right-8 z-[60] bg-[#1A120E] border border-white/10 rounded-2xl shadow-2xl shadow-black/50 transition-all duration-300 ${isExpanded ? 'w-72' : 'w-14 h-14 overflow-hidden'}`}>
+    <div className={`fixed bottom-8 right-8 z-[60] border rounded-2xl shadow-2xl transition-all duration-300 ${
+      theme === 'light' ? 'bg-white border-slate-200 shadow-amber-900/10' : 'bg-[#1A120E] border-white/10 shadow-black/50'
+    } ${isExpanded ? 'w-72' : 'w-14 h-14 overflow-hidden'}`}>
       <div className="p-4 flex flex-col gap-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 text-[#8B4513]">
             <Clock size={18} className={isActive ? 'animate-pulse' : ''} />
             {isExpanded && <span className="text-[10px] font-bold uppercase tracking-widest">Active Timer</span>}
           </div>
-          <button onClick={() => setIsExpanded(!isExpanded)} className="text-slate-500 hover:text-white transition-colors">
+          <button onClick={() => setIsExpanded(!isExpanded)} className={`transition-colors ${theme === 'light' ? 'text-slate-400 hover:text-slate-900' : 'text-slate-500 hover:text-white'}`}>
             {isExpanded ? <ChevronDown size={18} /> : <ChevronUp size={18} />}
           </button>
         </div>
 
         {isExpanded && (
           <>
-            <div className="bg-white/5 rounded-xl p-3 border border-white/5">
-              <p className="text-xs text-slate-400 mb-1 font-medium truncate">Working on:</p>
-              <p className="text-sm text-white font-bold truncate">{taskTitle || "Select a task..."}</p>
+            <div className={`rounded-xl p-3 border ${theme === 'light' ? 'bg-slate-50 border-slate-100' : 'bg-white/5 border-white/5'}`}>
+              <p className="text-xs text-slate-500 mb-1 font-medium truncate">Working on:</p>
+              <p className={`text-sm font-bold truncate ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>{taskTitle || "Select a task..."}</p>
             </div>
 
             <div className="flex items-center justify-between mt-2">
-              <span className="text-3xl font-mono font-bold text-white tracking-tighter">
+              <span className={`text-3xl font-mono font-bold tracking-tighter ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>
                 {formatTime(seconds)}
               </span>
               

@@ -55,4 +55,19 @@ public class TimeLogController {
     public ResponseEntity<List<TimeLog>> getTaskLogs(@PathVariable Long taskId) {
         return ResponseEntity.ok(timeLogRepository.findByTaskId(taskId));
     }
+
+    @GetMapping("/project/{projectId}")
+    public ResponseEntity<List<TimeLog>> getProjectLogs(@PathVariable Long projectId) {
+        return ResponseEntity.ok(timeLogRepository.findByTaskProjectId(projectId));
+    }
+
+    @PatchMapping("/{logId}/status")
+    public ResponseEntity<TimeLog> updateStatus(
+            @PathVariable Long logId,
+            @RequestParam TimeLog.TimeLogStatus status) {
+        TimeLog log = timeLogRepository.findById(logId)
+                .orElseThrow(() -> new RuntimeException("Time log not found"));
+        log.setStatus(status);
+        return ResponseEntity.ok(timeLogRepository.save(log));
+    }
 }

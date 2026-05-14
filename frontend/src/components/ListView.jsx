@@ -1,7 +1,7 @@
 import React from 'react';
 import { Clock, AlertCircle, CheckCircle2, User } from 'lucide-react';
 
-const ListView = ({ tasks, isLoading }) => {
+const ListView = ({ tasks, isLoading, theme }) => {
   if (isLoading) return (
     <div className="flex-1 flex items-center justify-center">
       <div className="w-10 h-10 border-2 border-[#8B4513]/20 border-t-[#8B4513] rounded-full animate-spin"></div>
@@ -10,10 +10,10 @@ const ListView = ({ tasks, isLoading }) => {
 
   const getPriorityColor = (priority) => {
     switch (priority) {
-      case 'HIGH': return 'text-red-400 bg-red-400/10';
-      case 'MEDIUM': return 'text-amber-400 bg-amber-400/10';
-      case 'LOW': return 'text-emerald-400 bg-emerald-400/10';
-      default: return 'text-slate-400 bg-slate-400/10';
+      case 'HIGH': return 'text-red-500 bg-red-500/10';
+      case 'MEDIUM': return 'text-amber-600 bg-amber-600/10';
+      case 'LOW': return 'text-emerald-600 bg-emerald-600/10';
+      default: return 'text-slate-500 bg-slate-500/10';
     }
   };
 
@@ -27,10 +27,12 @@ const ListView = ({ tasks, isLoading }) => {
 
   return (
     <div className="flex-1 overflow-auto p-8">
-      <div className="bg-white/5 rounded-2xl border border-white/10 overflow-hidden">
+      <div className={`rounded-2xl border overflow-hidden ${
+        theme === 'light' ? 'bg-white border-slate-200 shadow-xl shadow-amber-900/5' : 'bg-white/5 border-white/10'
+      }`}>
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="border-b border-white/10 bg-white/5">
+            <tr className={`border-b ${theme === 'light' ? 'bg-slate-50 border-slate-200' : 'bg-white/5 border-white/10'}`}>
               <th className="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Task Name</th>
               <th className="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Status</th>
               <th className="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Priority</th>
@@ -38,17 +40,21 @@ const ListView = ({ tasks, isLoading }) => {
               <th className="px-6 py-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest text-right">Due Date</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-white/5">
+          <tbody className={`divide-y ${theme === 'light' ? 'divide-slate-100' : 'divide-white/5'}`}>
             {tasks.map((task) => (
-              <tr key={task.id} className="hover:bg-white/[0.02] transition-colors group cursor-pointer">
+              <tr key={task.id} className={`transition-colors group cursor-pointer ${theme === 'light' ? 'hover:bg-slate-50' : 'hover:bg-white/[0.02]'}`}>
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
                     {getStatusIcon(task.status)}
-                    <span className="text-sm font-semibold text-slate-200 group-hover:text-[#8B4513] transition-colors">{task.title}</span>
+                    <span className={`text-sm font-semibold transition-colors ${
+                      theme === 'light' ? 'text-slate-800 group-hover:text-[#8B4513]' : 'text-slate-200 group-hover:text-[#8B4513]'
+                    }`}>{task.title}</span>
                   </div>
                 </td>
                 <td className="px-6 py-4">
-                  <span className="text-[10px] font-bold px-2 py-1 rounded bg-white/5 text-slate-400 uppercase tracking-wider">
+                  <span className={`text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider ${
+                    theme === 'light' ? 'bg-slate-100 text-slate-500' : 'bg-white/5 text-slate-400'
+                  }`}>
                     {task.status.replace('_', ' ')}
                   </span>
                 </td>
@@ -62,7 +68,7 @@ const ListView = ({ tasks, isLoading }) => {
                     <div className="w-6 h-6 rounded-lg bg-[#8B4513]/20 flex items-center justify-center text-[10px] text-white">
                       <User size={12} className="text-[#8B4513]" />
                     </div>
-                    <span className="text-xs text-slate-400">{task.assigneeName || 'Unassigned'}</span>
+                    <span className={`text-xs ${theme === 'light' ? 'text-slate-600' : 'text-slate-400'}`}>{task.assigneeName || 'Unassigned'}</span>
                   </div>
                 </td>
                 <td className="px-6 py-4 text-right">

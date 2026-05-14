@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, 
   List, 
@@ -12,22 +12,35 @@ import {
   ArrowRight,
   Zap,
   Layers,
-  Sparkles
+  Sparkles,
+  Lock
 } from 'lucide-react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
 const FeaturesPage = () => {
+  const navigate = useNavigate();
+  const isLoggedIn = !!localStorage.getItem('token');
+
   const features = [
-    { name: "Task list", flowkitName: "Flow List", description: "Minimalist task management designed for high focus.", icon: List, color: "text-[#8B4513]", bg: "bg-[#8B4513]/10" },
-    { name: "Project board", flowkitName: "Stack Board", description: "Visual kanban boards that make progress obvious.", icon: LayoutDashboard, color: "text-amber-600", bg: "bg-amber-600/10" },
-    { name: "Team chat", flowkitName: "Huddle", description: "Contextual team communication built into your tasks.", icon: MessageCircle, color: "text-[#20B2AA]", bg: "bg-[#20B2AA]/10" },
-    { name: "Overdue reminder", flowkitName: "Nudge", description: "Smart notifications that help you stay on track.", icon: Bell, color: "text-orange-400", bg: "bg-orange-400/10" },
-    { name: "Time tracking", flowkitName: "Timer", description: "Sub-millisecond time tracking for accurate billing.", icon: Timer, color: "text-rose-400", bg: "bg-rose-400/10" },
-    { name: "File attach", flowkitName: "Clip", description: "Secure file sharing and versioning for every project.", icon: Paperclip, color: "text-[#8D6E63]", bg: "bg-[#8D6E63]/10" },
-    { name: "Calendar view", flowkitName: "Schedule", description: "Visual timeline of your team's velocity and goals.", icon: Calendar, color: "text-amber-500", bg: "bg-amber-500/10" },
-    { name: "Settings", flowkitName: "Kit Settings", description: "Powerful customization to make Flowkit truly yours.", icon: Settings, color: "text-[#8D6E63]", bg: "bg-[#8D6E63]/10" },
+    { name: "Task list",       flowkitName: "Flow List",   description: "Minimalist task management designed for high focus.",         icon: List,            color: "text-[#8B4513]",   bg: "bg-[#8B4513]/10",  view: "LIST" },
+    { name: "Project board",   flowkitName: "Stack Board", description: "Visual kanban boards that make progress obvious.",             icon: LayoutDashboard, color: "text-amber-600",   bg: "bg-amber-600/10",  view: "BOARD" },
+    { name: "Team chat",       flowkitName: "Huddle",      description: "Contextual team communication built into your tasks.",         icon: MessageCircle,   color: "text-[#20B2AA]",  bg: "bg-[#20B2AA]/10",  view: "HUDDLE" },
+    { name: "Overdue reminder",flowkitName: "Nudge",       description: "Smart notifications that help you stay on track.",             icon: Bell,            color: "text-orange-400",  bg: "bg-orange-400/10", view: "NUDGE" },
+    { name: "Hours tracking",   flowkitName: "Timesheet",   description: "Professional hours tracking and automated invoicing for teams.", icon: Timer,           color: "text-rose-400",    bg: "bg-rose-400/10",   view: "TIMER" },
+    { name: "File attach",     flowkitName: "Clip",        description: "Secure file sharing and versioning for every project.",        icon: Paperclip,       color: "text-[#8D6E63]",  bg: "bg-[#8D6E63]/10",  view: "FILES" },
+    { name: "Calendar view",   flowkitName: "Calendar",    description: "Visual timeline of your team's velocity and goals.",           icon: Calendar,        color: "text-amber-500",   bg: "bg-amber-500/10",  view: "CALENDAR" },
+    { name: "Settings",        flowkitName: "Kit Settings",description: "Powerful customization to make Flowkit truly yours.",          icon: Settings,        color: "text-[#8D6E63]",  bg: "bg-[#8D6E63]/10",  view: "SETTINGS" },
   ];
+
+  const handleFeatureClick = (view) => {
+    if (isLoggedIn) {
+      // Navigate to dashboard and pass the desired view via state
+      navigate('/dashboard', { state: { view } });
+    } else {
+      navigate('/login', { state: { from: '/dashboard', view } });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#0F0906] text-[#D7CCC8] font-sans selection:bg-[#8B4513]/30 overflow-x-hidden">
@@ -53,6 +66,12 @@ const FeaturesPage = () => {
           <p className="text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
             Flowkit brings the best tools together using a simple, unified design language. Stop fighting your tools and start building.
           </p>
+          {!isLoggedIn && (
+            <p className="mt-6 text-sm text-slate-500 flex items-center justify-center gap-2">
+              <Lock size={14} />
+              Click any feature to get started — we'll guide you in.
+            </p>
+          )}
         </div>
 
         {/* Features Grid */}
@@ -60,11 +79,15 @@ const FeaturesPage = () => {
           {features.map((feature, index) => {
             const IconComponent = feature.icon;
             return (
-              <div key={index} className="group p-8 bg-white/[0.02] border border-white/5 rounded-[32px] hover:bg-white/[0.04] hover:border-white/10 transition-all duration-500 flex flex-col items-start">
+              <button
+                key={index}
+                onClick={() => handleFeatureClick(feature.view)}
+                className="group p-8 bg-white/[0.02] border border-white/5 rounded-[32px] hover:bg-white/[0.05] hover:border-[#8B4513]/30 hover:shadow-xl hover:shadow-amber-900/10 transition-all duration-300 flex flex-col items-start text-left cursor-pointer"
+              >
                 <div className={`w-14 h-14 rounded-2xl ${feature.bg} ${feature.color} flex items-center justify-center mb-8 group-hover:scale-110 transition-transform shadow-2xl`}>
                   <IconComponent size={28} />
                 </div>
-                <div className="mb-6">
+                <div className="mb-6 flex-1">
                   <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600 block mb-2">
                     {feature.name}
                   </span>
@@ -75,11 +98,13 @@ const FeaturesPage = () => {
                     {feature.description}
                   </p>
                 </div>
-                <div className="mt-auto pt-6 border-t border-white/5 w-full flex justify-between items-center group/btn">
-                  <span className="text-xs font-bold text-slate-600 group-hover:text-[#20B2AA] transition-colors">Learn more</span>
+                <div className="mt-auto pt-6 border-t border-white/5 w-full flex justify-between items-center">
+                  <span className="text-xs font-bold text-slate-600 group-hover:text-[#20B2AA] transition-colors">
+                    {isLoggedIn ? 'Open in Dashboard' : 'Sign in to use'}
+                  </span>
                   <ArrowRight size={16} className="text-slate-700 group-hover:text-[#20B2AA] group-hover:translate-x-1 transition-all" />
                 </div>
-              </div>
+              </button>
             );
           })}
         </div>
@@ -103,4 +128,5 @@ const FeaturesPage = () => {
 };
 
 export default FeaturesPage;
+
 

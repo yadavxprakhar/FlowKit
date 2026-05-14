@@ -68,4 +68,10 @@ public class ProjectService {
         project.getMembers().add(user);
         projectRepository.save(project);
     }
+
+    public List<User> getProjectMembers(Long projectId) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new RuntimeException("Project not found"));
+        return project.getMembers();
+    }
 }

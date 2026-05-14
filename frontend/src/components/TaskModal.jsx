@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { X, Calendar, AlignLeft, AlertCircle, User, ArrowRight } from 'lucide-react';
 import axios from 'axios';
 
-const TaskModal = ({ isOpen, onClose, projectId, onTaskCreated }) => {
+const TaskModal = ({ isOpen, onClose, projectId, onTaskCreated, theme }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState('MEDIUM');
@@ -40,23 +40,29 @@ const TaskModal = ({ isOpen, onClose, projectId, onTaskCreated }) => {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-[#0F0906]/80 backdrop-blur-sm" onClick={onClose}></div>
+      <div className={`absolute inset-0 backdrop-blur-sm ${theme === 'light' ? 'bg-slate-900/20' : 'bg-[#0F0906]/80'}`} onClick={onClose}></div>
       
-      <div className="relative bg-[#1A120E] border border-white/10 w-full max-w-xl rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
-        <div className="px-8 py-6 border-b border-white/5 flex items-center justify-between">
-          <h2 className="text-xl font-bold text-white tracking-tight">Create New Task</h2>
-          <button onClick={onClose} className="p-2 hover:bg-white/5 rounded-xl text-slate-400 transition-colors">
+      <div className={`relative border w-full max-w-xl rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200 ${
+        theme === 'light' ? 'bg-white border-slate-200' : 'bg-[#1A120E] border-white/10'
+      }`}>
+        <div className={`px-8 py-6 border-b flex items-center justify-between ${theme === 'light' ? 'bg-slate-50 border-slate-100' : 'border-white/5'}`}>
+          <h2 className={`text-xl font-bold tracking-tight ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>Create New Task</h2>
+          <button onClick={onClose} className={`p-2 rounded-xl transition-colors ${theme === 'light' ? 'hover:bg-slate-100 text-slate-400' : 'hover:bg-white/5 text-slate-400'}`}>
             <X size={20} />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-8 space-y-6">
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-2">Task Title</label>
+            <label className="block text-sm font-medium text-slate-500 mb-2">Task Title</label>
             <input
               type="text"
               autoFocus
-              className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-[#8B4513]/50 transition-all font-semibold"
+              className={`w-full border rounded-xl py-3 px-4 transition-all font-semibold focus:outline-none focus:ring-2 focus:ring-[#8B4513]/50 ${
+                theme === 'light' 
+                  ? 'bg-slate-50 border-slate-200 text-slate-900 placeholder-slate-400' 
+                  : 'bg-white/5 border-white/10 text-white placeholder-slate-600'
+              }`}
               placeholder="What needs to be done?"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
@@ -65,11 +71,15 @@ const TaskModal = ({ isOpen, onClose, projectId, onTaskCreated }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-400 mb-2">Description</label>
+            <label className="block text-sm font-medium text-slate-500 mb-2">Description</label>
             <div className="relative">
               <textarea
                 rows="4"
-                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-[#8B4513]/50 transition-all resize-none text-sm leading-relaxed"
+                className={`w-full border rounded-xl py-3 px-4 transition-all resize-none text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-[#8B4513]/50 ${
+                  theme === 'light' 
+                    ? 'bg-slate-50 border-slate-200 text-slate-900 placeholder-slate-400' 
+                    : 'bg-white/5 border-white/10 text-white placeholder-slate-600'
+                }`}
                 placeholder="Add some context..."
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -79,21 +89,25 @@ const TaskModal = ({ isOpen, onClose, projectId, onTaskCreated }) => {
 
           <div className="grid grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-medium text-slate-400 mb-2">Priority</label>
+              <label className="block text-sm font-medium text-slate-500 mb-2">Priority</label>
               <select
-                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-[#8B4513]/50 transition-all text-sm appearance-none cursor-pointer"
+                className={`w-full border rounded-xl py-3 px-4 transition-all text-sm appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#8B4513]/50 ${
+                  theme === 'light' ? 'bg-slate-50 border-slate-200 text-slate-900' : 'bg-white/5 border-white/10 text-white'
+                }`}
                 value={priority}
                 onChange={(e) => setPriority(e.target.value)}
               >
-                <option value="LOW" className="bg-[#1A120E]">Low Priority</option>
-                <option value="MEDIUM" className="bg-[#1A120E]">Medium Priority</option>
-                <option value="HIGH" className="bg-[#1A120E]">High Priority</option>
+                <option value="LOW" className={theme === 'light' ? 'bg-white' : 'bg-[#1A120E]'}>Low Priority</option>
+                <option value="MEDIUM" className={theme === 'light' ? 'bg-white' : 'bg-[#1A120E]'}>Medium Priority</option>
+                <option value="HIGH" className={theme === 'light' ? 'bg-white' : 'bg-[#1A120E]'}>High Priority</option>
               </select>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-400 mb-2">Assignee</label>
-              <div className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-slate-500 text-sm flex items-center gap-2 italic">
+              <label className="block text-sm font-medium text-slate-500 mb-2">Assignee</label>
+              <div className={`w-full border rounded-xl py-3 px-4 text-sm flex items-center gap-2 italic ${
+                theme === 'light' ? 'bg-slate-50 border-slate-100 text-slate-400' : 'bg-white/5 border-white/10 text-slate-500'
+              }`}>
                 <User size={16} />
                 Assigning to me
               </div>
@@ -104,7 +118,9 @@ const TaskModal = ({ isOpen, onClose, projectId, onTaskCreated }) => {
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-6 py-3 border border-white/10 rounded-xl text-sm font-bold text-slate-400 hover:bg-white/5 transition-all"
+              className={`flex-1 px-6 py-3 border rounded-xl text-sm font-bold transition-all ${
+                theme === 'light' ? 'border-slate-200 text-slate-500 hover:bg-slate-50' : 'border-white/10 text-slate-400 hover:bg-white/5'
+              }`}
             >
               Cancel
             </button>

@@ -24,7 +24,7 @@ const Register = () => {
       });
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('userEmail', email);
-      navigate('/dashboard');
+      navigate('/', { replace: true });
     } catch (err) {
       setError('Registration failed. This email might already be in use.');
     } finally {

@@ -22,7 +22,7 @@ const Login = () => {
       });
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('userEmail', email);
-      navigate('/dashboard');
+      navigate('/', { replace: true });
     } catch (err) {
       setError('Invalid email or password. Please try again.');
     } finally {

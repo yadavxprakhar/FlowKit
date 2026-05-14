@@ -30,12 +30,25 @@ public class TimeLog {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "task_id", nullable = false)
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties({"project", "assignee", "reporter", "hibernateLazyInitializer", "handler"})
     private Task task;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+    @com.fasterxml.jackson.annotation.JsonIgnoreProperties({"password", "projects", "hibernateLazyInitializer", "handler"})
     private User user;
 
     @CreationTimestamp
     private LocalDateTime loggedAt;
+
+    @Builder.Default
+    private boolean isBillable = true;
+
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private TimeLogStatus status = TimeLogStatus.PENDING;
+
+    public enum TimeLogStatus {
+        PENDING, APPROVED, REJECTED
+    }
 }

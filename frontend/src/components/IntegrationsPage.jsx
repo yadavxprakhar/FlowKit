@@ -1,20 +1,31 @@
 import React from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
-import { MessageSquare, Code, Cloud, Video, Mail, Calendar, Database, ArrowRight, Sparkles, Zap } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { MessageSquare, Code, Cloud, Video, Mail, Calendar, Database, ArrowRight, Sparkles, Zap, Lock } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
 
 const IntegrationsPage = () => {
+  const navigate = useNavigate();
+  const isLoggedIn = !!localStorage.getItem('token');
+
   const integrations = [
-    { name: "Slack", description: "Send Nudges and receive Huddle updates directly in your Slack channels.", icon: MessageSquare, color: "text-[#E01E5A]", bg: "bg-[#E01E5A]/10" },
-    { name: "GitHub", description: "Sync commits and pull requests with your Stack Board tasks automatically.", icon: Code, color: "text-white", bg: "bg-white/10" },
-    { name: "Google Drive", description: "Attach documents and sheets directly to Flow List items using Clip.", icon: Cloud, color: "text-blue-500", bg: "bg-blue-500/10" },
-    { name: "Figma", description: "Embed live design files in tasks for immediate team feedback.", icon: Code, color: "text-purple-500", bg: "bg-purple-500/10" },
-    { name: "Zoom", description: "Start instant video meetings from any Huddle conversation.", icon: Video, color: "text-blue-600", bg: "bg-blue-600/10" },
-    { name: "Gmail", description: "Turn emails into tasks with one click using our browser extension.", icon: Mail, color: "text-rose-500", bg: "bg-rose-500/10" },
-    { name: "Google Calendar", description: "Two-way sync your Schedule with Google Calendar events.", icon: Calendar, color: "text-blue-400", bg: "bg-blue-400/10" },
-    { name: "Notion", description: "Link Notion pages as project documentation references.", icon: Database, color: "text-white", bg: "bg-white/10" },
+    { name: "Slack",            providerKey: "SLACK",            description: "Send Nudges and receive Huddle updates directly in your Slack channels.", icon: MessageSquare, color: "text-[#E01E5A]", bg: "bg-[#E01E5A]/10" },
+    { name: "GitHub",           providerKey: "GITHUB",           description: "Sync commits and pull requests with your Stack Board tasks automatically.", icon: Code,          color: "text-white",   bg: "bg-white/10" },
+    { name: "Google Drive",     providerKey: "GOOGLE_DRIVE",     description: "Attach documents and sheets directly to Flow List items using Clip.",    icon: Cloud,         color: "text-blue-500", bg: "bg-blue-500/10" },
+    { name: "Figma",            providerKey: "FIGMA",            description: "Embed live design files in tasks for immediate team feedback.",            icon: Code,          color: "text-purple-500", bg: "bg-purple-500/10" },
+    { name: "Zoom",             providerKey: "ZOOM",             description: "Start instant video meetings from any Huddle conversation.",               icon: Video,         color: "text-blue-600", bg: "bg-blue-600/10" },
+    { name: "Gmail",            providerKey: "GMAIL",            description: "Turn emails into tasks with one click using our browser extension.",       icon: Mail,          color: "text-rose-500", bg: "bg-rose-500/10" },
+    { name: "Google Calendar",  providerKey: "GOOGLE_CALENDAR",  description: "Two-way sync your Schedule with Google Calendar events.",                  icon: Calendar,      color: "text-blue-400", bg: "bg-blue-400/10" },
+    { name: "Notion",           providerKey: "NOTION",           description: "Link Notion pages as project documentation references.",                    icon: Database,      color: "text-white",   bg: "bg-white/10" },
   ];
+
+  const handleConnect = (providerKey) => {
+    if (isLoggedIn) {
+      navigate(`/dashboard/integrations?provider=${providerKey}`);
+    } else {
+      navigate('/login', { state: { from: `/dashboard/integrations?provider=${providerKey}` } });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[#0F0906] text-[#D7CCC8] font-sans selection:bg-[#8B4513]/30 overflow-x-hidden">
@@ -39,6 +50,12 @@ const IntegrationsPage = () => {
           <p className="text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
             Flowkit plays nice with the software your team already uses. Sync data, automate workflows, and keep everything in one place.
           </p>
+          {!isLoggedIn && (
+            <p className="mt-6 text-sm text-slate-500 flex items-center justify-center gap-2">
+              <Lock size={14} />
+              Click any integration to connect — we'll guide you in.
+            </p>
+          )}
         </div>
 
         {/* Categories / Filters */}
@@ -55,7 +72,11 @@ const IntegrationsPage = () => {
           {integrations.map((integration, index) => {
             const IconComponent = integration.icon;
             return (
-              <div key={index} className="group p-8 bg-white/[0.02] border border-white/5 rounded-[32px] hover:bg-white/[0.04] hover:border-white/10 transition-all duration-500 flex flex-col items-start cursor-pointer">
+              <button
+                key={index}
+                onClick={() => handleConnect(integration.providerKey)}
+                className="group p-8 bg-white/[0.02] border border-white/5 rounded-[32px] hover:bg-white/[0.05] hover:border-[#8B4513]/30 hover:shadow-xl hover:shadow-amber-900/10 transition-all duration-300 flex flex-col items-start text-left cursor-pointer"
+              >
                 <div className="flex items-center gap-4 mb-8 w-full">
                   <div className={`w-14 h-14 rounded-2xl ${integration.bg} ${integration.color} flex items-center justify-center group-hover:rotate-6 transition-transform shadow-2xl`}>
                     <IconComponent size={28} />
@@ -67,11 +88,13 @@ const IntegrationsPage = () => {
                 <p className="text-sm text-slate-500 leading-relaxed mb-8 flex-grow">
                   {integration.description}
                 </p>
-                <div className="w-full pt-6 border-t border-white/5 flex justify-between items-center group/btn">
-                  <span className="text-xs font-bold text-slate-600 group-hover:text-[#20B2AA] transition-colors">Connect</span>
+                <div className="w-full pt-6 border-t border-white/5 flex justify-between items-center">
+                  <span className="text-xs font-bold text-slate-600 group-hover:text-[#20B2AA] transition-colors">
+                    {isLoggedIn ? 'Connect Now' : 'Sign in to connect'}
+                  </span>
                   <ArrowRight size={16} className="text-slate-700 group-hover:text-[#20B2AA] group-hover:translate-x-1 transition-all" />
                 </div>
-              </div>
+              </button>
             );
           })}
         </div>
@@ -88,10 +111,10 @@ const IntegrationsPage = () => {
                 <Zap size={18} />
                 Request Custom Integration
               </button>
-              <button className="px-10 py-4 bg-white/5 border border-white/10 text-white rounded-2xl font-black transition-all hover:bg-white/10 flex items-center justify-center gap-2">
+              <Link to="/api-docs" className="px-10 py-4 bg-white/5 border border-white/10 text-white rounded-2xl font-black transition-all hover:bg-white/10 flex items-center justify-center gap-2">
                 <Code size={18} />
                 View API Docs
-              </button>
+              </Link>
             </div>
           </div>
         </section>
@@ -102,5 +125,5 @@ const IntegrationsPage = () => {
   );
 };
 
-export default IntegrationsPage;
+export default IntegrationsPage
 

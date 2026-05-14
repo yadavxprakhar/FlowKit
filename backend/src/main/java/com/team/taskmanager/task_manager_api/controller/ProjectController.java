@@ -1,6 +1,7 @@
 package com.team.taskmanager.task_manager_api.controller;
 
 import com.team.taskmanager.task_manager_api.dto.ProjectDto;
+import com.team.taskmanager.task_manager_api.model.User;
 import com.team.taskmanager.task_manager_api.service.ProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -36,5 +37,10 @@ public class ProjectController {
     public ResponseEntity<Void> addMember(@PathVariable Long projectId, @PathVariable Long userId) {
         projectService.addMemberToProject(projectId, userId);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{projectId}/members")
+    public ResponseEntity<List<User>> getProjectMembers(@PathVariable Long projectId) {
+        return ResponseEntity.ok(projectService.getProjectMembers(projectId));
     }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import TaskCard from './TaskCard';
 import { Plus, MoreHorizontal } from 'lucide-react';
 
-const StackBoard = ({ tasks, isLoading, onTaskSelect }) => {
+const StackBoard = ({ tasks, isLoading, onTaskSelect, theme }) => {
   const columns = [
     { title: 'Todo', status: 'TODO', color: 'bg-[#8D6E63]' },
     { title: 'In Progress', status: 'IN_PROGRESS', color: 'bg-[#8B4513]' },
@@ -24,16 +24,18 @@ const StackBoard = ({ tasks, isLoading, onTaskSelect }) => {
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
               <div className={`w-2 h-2 rounded-full ${column.color}`}></div>
-              <h3 className="text-white font-bold tracking-tight">{column.title}</h3>
-              <span className="bg-white/5 text-slate-500 text-xs px-2 py-0.5 rounded-full border border-white/5 font-medium">
+              <h3 className={`font-bold tracking-tight ${theme === 'light' ? 'text-[#2D1E15]' : 'text-white'}`}>{column.title}</h3>
+              <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+                theme === 'light' ? 'bg-slate-100 text-slate-500 border border-slate-200' : 'bg-white/5 text-slate-500 border border-white/5'
+              }`}>
                 {tasks.filter(t => t.status === column.status).length}
               </span>
             </div>
             <div className="flex items-center gap-1">
-              <button className="p-1.5 hover:bg-white/5 rounded text-slate-500 transition-colors">
+              <button className={`p-1.5 rounded transition-colors ${theme === 'light' ? 'hover:bg-slate-100 text-slate-400' : 'hover:bg-white/5 text-slate-500'}`}>
                 <Plus size={18} />
               </button>
-              <button className="p-1.5 hover:bg-white/5 rounded text-slate-500 transition-colors">
+              <button className={`p-1.5 rounded transition-colors ${theme === 'light' ? 'hover:bg-slate-100 text-slate-400' : 'hover:bg-white/5 text-slate-500'}`}>
                 <MoreHorizontal size={18} />
               </button>
             </div>
@@ -44,13 +46,15 @@ const StackBoard = ({ tasks, isLoading, onTaskSelect }) => {
               .filter((task) => task.status === column.status)
               .map((task) => (
                 <div key={task.id} onClick={() => onTaskSelect(task)}>
-                  <TaskCard task={task} />
+                  <TaskCard task={task} theme={theme} />
                 </div>
               ))}
             
             {/* Drop Zone / Empty Column State */}
             {tasks.filter(t => t.status === column.status).length === 0 && (
-              <div className="h-32 border-2 border-dashed border-white/5 rounded-2xl flex items-center justify-center text-slate-600 text-sm italic font-medium">
+              <div className={`h-32 border-2 border-dashed rounded-2xl flex items-center justify-center text-sm italic font-medium ${
+                theme === 'light' ? 'border-slate-200 text-slate-400' : 'border-white/5 text-slate-600'
+              }`}>
                 No tasks yet
               </div>
             )}

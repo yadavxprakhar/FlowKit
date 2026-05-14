@@ -19,7 +19,7 @@ const TaskCard = ({ task }) => {
         </button>
       </div>
 
-      <h4 className="text-slate-100 font-semibold mb-2 group-hover:text-blue-400 transition-colors line-clamp-2">
+      <h4 className="text-[#D7CCC8] font-semibold mb-2 group-hover:text-[#8B4513] transition-colors line-clamp-2">
         {task.title}
       </h4>
       
@@ -29,7 +29,7 @@ const TaskCard = ({ task }) => {
 
       <div className="flex items-center justify-between pt-4 border-t border-white/5">
         <div className="flex -space-x-2">
-          <div className="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center border-2 border-[#1e293b]">
+          <div className="w-6 h-6 rounded-full bg-[#8B4513] flex items-center justify-center border-2 border-[#1e293b]">
             <span className="text-[10px] font-bold text-white uppercase">{task.assigneeName?.charAt(0) || <User size={10} />}</span>
           </div>
         </div>

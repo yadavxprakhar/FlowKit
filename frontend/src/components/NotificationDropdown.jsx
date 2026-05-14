@@ -5,10 +5,10 @@ const NotificationDropdown = ({ isOpen, notifications, onClose, onMarkAsRead }) 
   if (!isOpen) return null;
 
   return (
-    <div className="absolute top-12 right-0 w-80 bg-[#1e293b] border border-white/10 rounded-2xl shadow-2xl z-[100] overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+    <div className="absolute top-12 right-0 w-80 bg-[#1A120E] border border-white/10 rounded-2xl shadow-2xl z-[100] overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
       <div className="p-4 border-b border-white/5 flex items-center justify-between">
         <h3 className="text-sm font-bold text-white tracking-tight">Recent Nudges</h3>
-        <span className="text-[10px] bg-blue-600 text-white px-2 py-0.5 rounded-full font-bold uppercase">
+        <span className="text-[10px] bg-[#8B4513] text-white px-2 py-0.5 rounded-full font-bold uppercase">
           {notifications.filter(n => !n.isRead).length} New
         </span>
       </div>
@@ -27,7 +27,7 @@ const NotificationDropdown = ({ isOpen, notifications, onClose, onMarkAsRead }) 
               className={`p-4 border-b border-white/5 flex gap-3 cursor-pointer transition-colors ${n.isRead ? 'opacity-50 grayscale-[0.5]' : 'hover:bg-white/5'}`}
             >
               <div className="mt-1 flex-shrink-0">
-                {n.type === 'ALERT' ? <AlertCircle size={16} className="text-red-500" /> : <Info size={16} className="text-blue-500" />}
+                {n.type === 'ALERT' ? <AlertCircle size={16} className="text-rose-500" /> : <Info size={16} className="text-[#8B4513]" />}
               </div>
               <div className="flex-1">
                 <p className="text-xs text-slate-200 leading-relaxed font-medium mb-1">
@@ -39,7 +39,7 @@ const NotificationDropdown = ({ isOpen, notifications, onClose, onMarkAsRead }) 
                 </div>
               </div>
               {!n.isRead && (
-                <div className="w-1.5 h-1.5 bg-blue-600 rounded-full mt-2"></div>
+                <div className="w-1.5 h-1.5 bg-[#8B4513] rounded-full mt-2"></div>
               )}
             </div>
           ))

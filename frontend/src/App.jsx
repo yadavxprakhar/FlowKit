@@ -5,6 +5,8 @@ import FeaturesPage from './components/FeaturesPage';
 import PricingPage from './components/PricingPage';
 import IntegrationsPage from './components/IntegrationsPage';
 import AboutPage from './components/AboutPage';
+import CareersPage from './components/CareersPage';
+import ContactPage from './components/ContactPage';
 import PrivacyPage from './components/PrivacyPage';
 import TermsPage from './components/TermsPage';
 import SecurityPage from './components/SecurityPage';
@@ -23,6 +25,8 @@ function App() {
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/integrations" element={<IntegrationsPage />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/careers" element={<CareersPage />} />
+        <Route path="/contact" element={<ContactPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/terms" element={<TermsPage />} />
         <Route path="/security" element={<SecurityPage />} />

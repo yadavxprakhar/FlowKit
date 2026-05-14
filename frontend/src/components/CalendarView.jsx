@@ -13,7 +13,7 @@ const CalendarView = ({ tasks }) => {
     switch (priority) {
       case 'HIGH': return 'bg-red-500/10 text-red-400 border-red-500/20';
       case 'MEDIUM': return 'bg-amber-500/10 text-amber-400 border-amber-500/20';
-      default: return 'bg-blue-500/10 text-blue-400 border-blue-500/20';
+      default: return 'bg-[#8B4513]/10 text-[#8B4513] border-[#8B4513]/20';
     }
   };
 
@@ -32,17 +32,17 @@ const CalendarView = ({ tasks }) => {
       const dayTasks = tasks.filter(t => t.dueDate && new Date(t.dueDate).getDate() === i);
       
       cells.push(
-        <div key={i} className={`min-h-[140px] relative border border-white/[0.05] p-3 transition-all duration-300 group hover:bg-white/[0.04] ${isToday ? 'bg-blue-600/[0.03]' : ''}`}>
+        <div key={i} className={`min-h-[140px] relative border border-white/[0.05] p-3 transition-all duration-300 group hover:bg-white/[0.04] ${isToday ? 'bg-[#8B4513]/[0.03]' : ''}`}>
           <div className="flex items-center justify-between mb-3">
             <span className={`text-xs font-bold w-7 h-7 flex items-center justify-center rounded-lg transition-all ${
               isToday 
-                ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30' 
+                ? 'bg-[#8B4513] text-white shadow-lg shadow-amber-900/30' 
                 : 'text-slate-500 group-hover:text-slate-300'
             }`}>
               {i}
             </span>
             {dayTasks.length > 0 && (
-              <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></div>
+              <div className="w-1.5 h-1.5 rounded-full bg-[#8B4513] animate-pulse"></div>
             )}
           </div>
           
@@ -73,12 +73,12 @@ const CalendarView = ({ tasks }) => {
   };
 
   return (
-    <div className="flex-1 flex flex-col p-8 overflow-hidden bg-[#0f172a]">
+    <div className="flex-1 flex flex-col p-8 overflow-hidden bg-[#0F0906]">
       {/* Premium Header */}
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-4">
-          <div className="p-3 bg-blue-600/10 rounded-2xl border border-blue-500/20">
-            <CalendarIcon size={24} className="text-blue-400" />
+          <div className="p-3 bg-[#8B4513]/10 rounded-2xl border border-[#8B4513]/20">
+            <CalendarIcon size={24} className="text-[#8B4513]" />
           </div>
           <div>
             <h3 className="text-2xl font-bold text-white tracking-tight">{currentMonth} {currentYear}</h3>

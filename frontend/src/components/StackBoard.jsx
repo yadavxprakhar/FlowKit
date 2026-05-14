@@ -4,15 +4,15 @@ import { Plus, MoreHorizontal } from 'lucide-react';
 
 const StackBoard = ({ tasks, isLoading, onTaskSelect }) => {
   const columns = [
-    { title: 'Todo', status: 'TODO', color: 'bg-slate-500' },
-    { title: 'In Progress', status: 'IN_PROGRESS', color: 'bg-blue-600' },
-    { title: 'Done', status: 'DONE', color: 'bg-emerald-500' },
+    { title: 'Todo', status: 'TODO', color: 'bg-[#8D6E63]' },
+    { title: 'In Progress', status: 'IN_PROGRESS', color: 'bg-[#8B4513]' },
+    { title: 'Done', status: 'DONE', color: 'bg-[#20B2AA]' },
   ];
 
   if (isLoading) {
     return (
       <div className="flex-1 flex items-center justify-center">
-        <div className="w-12 h-12 border-4 border-blue-600/20 border-t-blue-600 rounded-full animate-spin"></div>
+        <div className="w-12 h-12 border-4 border-[#8B4513]/20 border-t-[#8B4513] rounded-full animate-spin"></div>
       </div>
     );
   }

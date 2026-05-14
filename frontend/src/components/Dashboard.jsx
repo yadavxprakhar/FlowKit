@@ -140,11 +140,11 @@ const Dashboard = () => {
     : theme;
 
   return (
-    <div className={`flex h-screen overflow-hidden font-sans relative transition-all duration-500 ${displayTheme === 'light' ? 'bg-[#f8fafc] text-slate-900' : 'bg-[#0f172a] text-white'}`}>
+    <div className={`flex h-screen overflow-hidden font-sans relative transition-all duration-500 ${displayTheme === 'light' ? 'bg-[#FDFBF7] text-[#2D1E15]' : 'bg-[#0F0906] text-[#D7CCC8]'}`}>
       {/* Background Orbs for Consistency */}
-      <div className={`absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full blur-[120px] pointer-events-none animate-pulse ${displayTheme === 'light' ? 'bg-blue-200/40' : 'bg-blue-600/10'}`}></div>
-      <div className={`absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full blur-[120px] pointer-events-none animate-pulse ${displayTheme === 'light' ? 'bg-indigo-200/40' : 'bg-indigo-600/10'}`} style={{ animationDelay: '1.5s' }}></div>
-      <div className={`absolute top-[30%] right-[10%] w-[20%] h-[20%] rounded-full blur-[80px] pointer-events-none ${displayTheme === 'light' ? 'bg-purple-200/30' : 'bg-purple-600/5'}`}></div>
+      <div className={`absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full blur-[120px] pointer-events-none animate-pulse ${displayTheme === 'light' ? 'bg-[#8B4513]/10' : 'bg-[#8B4513]/10'}`}></div>
+      <div className={`absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full blur-[120px] pointer-events-none animate-pulse ${displayTheme === 'light' ? 'bg-[#20B2AA]/10' : 'bg-[#20B2AA]/10'}`} style={{ animationDelay: '1.5s' }}></div>
+      <div className={`absolute top-[30%] right-[10%] w-[20%] h-[20%] rounded-full blur-[80px] pointer-events-none ${displayTheme === 'light' ? 'bg-amber-100/30' : 'bg-amber-900/5'}`}></div>
 
       <ProjectSidebar 
         projects={projects} 
@@ -164,11 +164,11 @@ const Dashboard = () => {
         <header className={`h-20 border-b flex items-center justify-between px-8 z-20 backdrop-blur-xl ${displayTheme === 'light' ? 'bg-white/40 border-slate-200' : 'bg-white/[0.02] border-white/5'}`}>
           <div className="flex items-center gap-6 flex-1">
             <div className="relative w-full max-w-md group">
-              <Search className={`absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 group-focus-within:text-blue-500 transition-colors ${displayTheme === 'light' ? 'text-slate-400' : 'text-slate-500'}`} />
+              <Search className={`absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 group-focus-within:text-[#8B4513] transition-colors ${displayTheme === 'light' ? 'text-slate-400' : 'text-slate-500'}`} />
               <input 
                 type="text" 
                 placeholder="Search tasks, projects..." 
-                className={`w-full border rounded-xl py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all ${
+                className={`w-full border rounded-xl py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-[#8B4513]/50 transition-all ${
                   displayTheme === 'light' 
                     ? 'bg-white border-slate-200 text-slate-900 placeholder-slate-400' 
                     : 'bg-white/5 border-white/10 text-white placeholder-slate-500'
@@ -186,7 +186,7 @@ const Dashboard = () => {
                 className="p-2.5 hover:bg-white/5 rounded-xl text-slate-400 transition-colors relative">
                 <Bell size={20} />
                 {notifications.some(n => !n.isRead) && (
-                  <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-blue-600 rounded-full border-2 border-[#0f172a]"></span>
+                  <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-[#8B4513] rounded-full border-2 border-[#0F0906]"></span>
                 )}
               </button>
               <NotificationDropdown 
@@ -201,7 +201,7 @@ const Dashboard = () => {
               <button 
                 onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                 className={`flex items-center gap-3 p-1.5 rounded-xl transition-all group ${displayTheme === 'light' ? 'hover:bg-slate-100' : 'hover:bg-white/5'}`}>
-                <div className="w-8 h-8 rounded-lg overflow-hidden bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/20">
+                <div className="w-8 h-8 rounded-lg overflow-hidden bg-gradient-to-tr from-[#8B4513] to-amber-900 flex items-center justify-center shadow-lg shadow-amber-900/20">
                   {avatarUrl ? (
                     <img src={`http://localhost:8080${avatarUrl}`} alt="Profile" className="w-full h-full object-cover" />
                   ) : (
@@ -229,7 +229,7 @@ const Dashboard = () => {
             <div className="flex items-center gap-3 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-2">
               <span>Projects</span>
               <span className="text-slate-700">/</span>
-              <span className="text-blue-400">{currentProject?.name}</span>
+              <span className="text-[#8B4513]">{currentProject?.name}</span>
             </div>
             <h2 className="text-3xl font-bold text-white tracking-tight flex items-center gap-3">
               {currentProject?.name || "Loading..."}
@@ -244,7 +244,7 @@ const Dashboard = () => {
             </button>
             <button 
               onClick={() => setIsTaskModalOpen(true)}
-              className="flex items-center gap-2 px-6 py-2 bg-blue-600 hover:bg-blue-500 rounded-xl text-sm font-bold text-white shadow-lg shadow-blue-500/20 transition-all active:scale-[0.98]">
+              className="flex items-center gap-2 px-6 py-2 bg-[#8B4513] hover:bg-[#5D2E0A] rounded-xl text-sm font-bold text-white shadow-lg shadow-amber-900/20 transition-all active:scale-[0.98]">
               <Plus size={18} />
               New Task
             </button>
@@ -255,27 +255,27 @@ const Dashboard = () => {
         <div className="px-8 mt-6 flex gap-8 border-b border-white/5 z-10">
           <button 
             onClick={() => setCurrentView('BOARD')}
-            className={`pb-4 text-sm font-bold transition-all ${currentView === 'BOARD' ? 'text-blue-400 border-b-2 border-blue-400' : 'text-slate-500 hover:text-slate-300'}`}>
+            className={`pb-4 text-sm font-bold transition-all ${currentView === 'BOARD' ? 'text-[#8B4513] border-b-2 border-[#8B4513]' : 'text-slate-500 hover:text-slate-300'}`}>
             Stack Board
           </button>
           <button 
             onClick={() => setCurrentView('HUDDLE')}
-            className={`pb-4 text-sm font-bold transition-all ${currentView === 'HUDDLE' ? 'text-blue-400 border-b-2 border-blue-400' : 'text-slate-500 hover:text-slate-300'}`}>
+            className={`pb-4 text-sm font-bold transition-all ${currentView === 'HUDDLE' ? 'text-[#8B4513] border-b-2 border-[#8B4513]' : 'text-slate-500 hover:text-slate-300'}`}>
             Huddle
           </button>
           <button 
             onClick={() => setCurrentView('LIST')}
-            className={`pb-4 text-sm font-bold transition-all ${currentView === 'LIST' ? 'text-blue-400 border-b-2 border-blue-400' : 'text-slate-500 hover:text-slate-300'}`}>
+            className={`pb-4 text-sm font-bold transition-all ${currentView === 'LIST' ? 'text-[#8B4513] border-b-2 border-[#8B4513]' : 'text-slate-500 hover:text-slate-300'}`}>
             List View
           </button>
           <button 
             onClick={() => setCurrentView('CALENDAR')}
-            className={`pb-4 text-sm font-bold transition-all ${currentView === 'CALENDAR' ? 'text-blue-400 border-b-2 border-blue-400' : 'text-slate-500 hover:text-slate-300'}`}>
+            className={`pb-4 text-sm font-bold transition-all ${currentView === 'CALENDAR' ? 'text-[#8B4513] border-b-2 border-[#8B4513]' : 'text-slate-500 hover:text-slate-300'}`}>
             Calendar
           </button>
           <button 
             onClick={() => setCurrentView('FILES')}
-            className={`pb-4 text-sm font-bold transition-all ${currentView === 'FILES' ? 'text-blue-400 border-b-2 border-blue-400' : 'text-slate-500 hover:text-slate-300'}`}>
+            className={`pb-4 text-sm font-bold transition-all ${currentView === 'FILES' ? 'text-[#8B4513] border-b-2 border-[#8B4513]' : 'text-slate-500 hover:text-slate-300'}`}>
             Files
           </button>
         </div>

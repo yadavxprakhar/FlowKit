@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Layout, Plus, Folder, Hash, Settings, LogOut, ChevronLeft, ChevronRight } from 'lucide-react';
+import logo from '../assets/logo.png';
 
 const ProjectSidebar = ({ 
   projects, 
@@ -22,8 +23,8 @@ const ProjectSidebar = ({
       <div className={`p-6 flex items-center justify-between border-b ${theme === 'light' ? 'border-slate-200' : 'border-white/5'}`}>
         {!isCollapsed && (
           <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/20">
-              <Layout className="text-white w-5 h-5" />
+            <div className="w-8 h-8 bg-[#8B4513] rounded-lg flex items-center justify-center shadow-lg shadow-amber-900/20 overflow-hidden p-1">
+              <img src={logo} alt="Flowkit" className="w-full h-full object-contain" />
             </div>
             <span className={`font-bold text-xl tracking-tight ${theme === 'light' ? 'text-slate-900' : 'text-white'}`}>Flowkit</span>
           </Link>
@@ -53,11 +54,11 @@ const ProjectSidebar = ({
                 onClick={() => onSelectProject(project.id)}
                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all group ${
                   selectedProjectId === project.id 
-                    ? 'bg-blue-600/10 text-blue-400 border border-blue-600/20' 
+                    ? 'bg-[#8B4513]/10 text-[#8B4513] border border-[#8B4513]/20' 
                     : 'text-slate-400 hover:bg-white/5 hover:text-slate-200 border border-transparent'
                 } ${isCollapsed ? 'justify-center' : ''}`}
               >
-                <Folder size={20} className={selectedProjectId === project.id ? 'text-blue-400' : 'text-slate-500 group-hover:text-slate-300'} />
+                <Folder size={20} className={selectedProjectId === project.id ? 'text-[#8B4513]' : 'text-slate-500 group-hover:text-slate-300'} />
                 {!isCollapsed && <span className="font-medium truncate">{project.name}</span>}
               </button>
             ))}

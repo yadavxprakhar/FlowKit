@@ -60,17 +60,17 @@ const HuddleView = ({ projectId, projectName }) => {
   if (isLoading) {
     return (
       <div className="flex-1 flex items-center justify-center bg-[#0f172a]">
-        <div className="w-12 h-12 border-4 border-blue-600/20 border-t-blue-600 rounded-full animate-spin"></div>
+        <div className="w-12 h-12 border-4 border-[#8B4513]/20 border-t-[#8B4513] rounded-full animate-spin"></div>
       </div>
     );
   }
 
   return (
-    <div className="flex-1 flex flex-col bg-[#0f172a] overflow-hidden">
+    <div className="flex-1 flex flex-col bg-[#0F0906] overflow-hidden">
       {/* Huddle Header */}
-      <div className="h-16 border-b border-white/5 px-8 flex items-center justify-between bg-[#0f172a]/50 backdrop-blur-sm">
+      <div className="h-16 border-b border-white/5 px-8 flex items-center justify-between bg-[#0F0906]/50 backdrop-blur-sm">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-blue-600/10 rounded-lg flex items-center justify-center text-blue-400">
+          <div className="w-8 h-8 bg-[#6F4E37]/10 rounded-lg flex items-center justify-center text-[#6F4E37]">
             <Hash size={18} />
           </div>
           <div>
@@ -98,11 +98,11 @@ const HuddleView = ({ projectId, projectName }) => {
                   <span className="text-sm font-bold text-slate-200">{msg.sender?.name}</span>
                   <span className="text-[10px] text-slate-500">{new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                 </div>
-                <div className={`px-4 py-3 rounded-2xl text-sm leading-relaxed ${
-                  isMe 
-                    ? 'bg-blue-600 text-white rounded-tr-none' 
-                    : 'bg-white/5 border border-white/10 text-slate-300 rounded-tl-none'
-                }`}>
+                  <div className={`px-4 py-3 rounded-2xl text-sm leading-relaxed ${
+                    isMe 
+                      ? 'bg-[#8B4513] text-white rounded-tr-none' 
+                      : 'bg-white/5 border border-white/10 text-slate-300 rounded-tl-none'
+                  }`}>
                   {msg.content}
                 </div>
               </div>
@@ -114,7 +114,7 @@ const HuddleView = ({ projectId, projectName }) => {
 
       {/* Input Area */}
       <div className="p-8">
-        <form onSubmit={handleSendMessage} className="bg-white/5 border border-white/10 rounded-2xl p-2 flex items-center gap-2 focus-within:border-blue-500/50 focus-within:ring-1 focus-within:ring-blue-500/50 transition-all">
+        <form onSubmit={handleSendMessage} className="bg-white/5 border border-white/10 rounded-2xl p-2 flex items-center gap-2 focus-within:border-[#8B4513]/50 focus-within:ring-1 focus-within:ring-[#8B4513]/50 transition-all">
           <button type="button" className="p-2 text-slate-500 hover:text-slate-300 transition-colors">
             <Paperclip size={20} />
           </button>
@@ -130,7 +130,7 @@ const HuddleView = ({ projectId, projectName }) => {
           </button>
           <button
             type="submit"
-            className="p-2 bg-blue-600 text-white rounded-xl hover:bg-blue-500 shadow-lg shadow-blue-500/20 transition-all active:scale-[0.98]"
+            className="p-2 bg-[#8B4513] text-white rounded-xl hover:bg-[#5D2E0A] shadow-lg shadow-amber-900/20 transition-all active:scale-[0.98]"
           >
             <Send size={20} />
           </button>

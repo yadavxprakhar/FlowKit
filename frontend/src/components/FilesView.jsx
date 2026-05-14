@@ -10,9 +10,9 @@ const FilesView = () => {
 
   const getFileIcon = (type) => {
     switch (type) {
-      case 'PDF': return <FileText size={24} className="text-red-400" />;
-      case 'IMAGE': return <Image size={24} className="text-blue-400" />;
-      default: return <File size={24} className="text-slate-400" />;
+      case 'PDF': return <FileText size={24} className="text-rose-400" />;
+      case 'IMAGE': return <Image size={24} className="text-[#20B2AA]" />;
+      default: return <File size={24} className="text-[#8B4513]" />;
     }
   };
 
@@ -20,7 +20,7 @@ const FilesView = () => {
     <div className="flex-1 p-8 flex flex-col overflow-hidden">
       <div className="flex items-center justify-between mb-8">
         <h3 className="text-xl font-bold text-white tracking-tight">Project Assets</h3>
-        <button className="flex items-center gap-2 px-6 py-2.5 bg-blue-600 hover:bg-blue-500 rounded-xl text-sm font-bold text-white shadow-lg shadow-blue-500/20 transition-all active:scale-[0.98]">
+        <button className="flex items-center gap-2 px-6 py-2.5 bg-[#8B4513] hover:bg-[#5D2E0A] rounded-xl text-sm font-bold text-white shadow-lg shadow-amber-900/20 transition-all active:scale-[0.98]">
           <Plus size={18} />
           Upload File
         </button>

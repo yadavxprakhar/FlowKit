@@ -57,10 +57,10 @@ const TimerWidget = ({ taskId, taskTitle }) => {
   if (!taskId && !isActive) return null;
 
   return (
-    <div className={`fixed bottom-8 right-8 z-[60] bg-[#1e293b] border border-white/10 rounded-2xl shadow-2xl shadow-black/50 transition-all duration-300 ${isExpanded ? 'w-72' : 'w-14 h-14 overflow-hidden'}`}>
+    <div className={`fixed bottom-8 right-8 z-[60] bg-[#1A120E] border border-white/10 rounded-2xl shadow-2xl shadow-black/50 transition-all duration-300 ${isExpanded ? 'w-72' : 'w-14 h-14 overflow-hidden'}`}>
       <div className="p-4 flex flex-col gap-3">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 text-blue-400">
+          <div className="flex items-center gap-2 text-[#8B4513]">
             <Clock size={18} className={isActive ? 'animate-pulse' : ''} />
             {isExpanded && <span className="text-[10px] font-bold uppercase tracking-widest">Active Timer</span>}
           </div>
@@ -92,7 +92,7 @@ const TimerWidget = ({ taskId, taskTitle }) => {
                 <button
                   onClick={handleStart}
                   disabled={!taskId}
-                  className="w-12 h-12 bg-blue-600 hover:bg-blue-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-500/20 transition-all active:scale-[0.98] disabled:opacity-50"
+                  className="w-12 h-12 bg-[#8B4513] hover:bg-[#5D2E0A] rounded-xl flex items-center justify-center text-white shadow-lg shadow-amber-900/20 transition-all active:scale-[0.98] disabled:opacity-50"
                 >
                   <Play size={20} fill="currentColor" />
                 </button>

@@ -1,30 +1,30 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #2563EB;
-  --color-primary-hover: #1D4ED8;
-  --color-primary-light: #DBEAFE;
+  --color-primary: #8B4513;
+  --color-primary-hover: #5D2E0A;
+  --color-primary-light: #FDF5E6;
   
-  --color-secondary: #0EA5E9;
-  --color-secondary-hover: #0284C7;
+  --color-secondary: #20B2AA;
+  --color-secondary-hover: #008B8B;
   
   --color-success: #10B981;
   --color-warning: #F59E0B;
   --color-error: #EF4444;
-  --color-info: #3B82F6;
+  --color-info: #7CC0D8;
   
-  --color-bg-light: #F8FAFC;
+  --color-bg-light: #FAF9F6;
   --color-surface-light: #FFFFFF;
-  --color-border-light: #E2E8F0;
-  --color-text-primary-light: #0F172A;
-  --color-text-secondary-light: #475569;
-  --color-text-muted-light: #94A3B8;
+  --color-border-light: #E8E6E1;
+  --color-text-primary-light: #2D1E15;
+  --color-text-secondary-light: #5D4037;
+  --color-text-muted-light: #8D6E63;
   
-  --color-bg-dark: #111827;
-  --color-surface-dark: #1F2937;
-  --color-border-dark: #374151;
-  --color-text-primary-dark: #F9FAFB;
-  --color-text-secondary-dark: #D1D5DB;
+  --color-bg-dark: #0F0906;
+  --color-surface-dark: #1A120E;
+  --color-border-dark: #2D1E15;
+  --color-text-primary-dark: #FAF9F6;
+  --color-text-secondary-dark: #D7CCC8;
 
   --spacing-1: 4px;
   --spacing-2: 8px;

@@ -4,7 +4,7 @@ import { Clock, AlertCircle, CheckCircle2, User } from 'lucide-react';
 const ListView = ({ tasks, isLoading }) => {
   if (isLoading) return (
     <div className="flex-1 flex items-center justify-center">
-      <div className="w-10 h-10 border-2 border-blue-600/20 border-t-blue-600 rounded-full animate-spin"></div>
+      <div className="w-10 h-10 border-2 border-[#8B4513]/20 border-t-[#8B4513] rounded-full animate-spin"></div>
     </div>
   );
 
@@ -19,9 +19,9 @@ const ListView = ({ tasks, isLoading }) => {
 
   const getStatusIcon = (status) => {
     switch (status) {
-      case 'DONE': return <CheckCircle2 size={16} className="text-emerald-500" />;
-      case 'IN_PROGRESS': return <Clock size={16} className="text-blue-500" />;
-      default: return <AlertCircle size={16} className="text-slate-500" />;
+      case 'DONE': return <CheckCircle2 size={16} className="text-[#20B2AA]" />;
+      case 'IN_PROGRESS': return <Clock size={16} className="text-[#8B4513]" />;
+      default: return <AlertCircle size={16} className="text-[#8D6E63]" />;
     }
   };
 
@@ -44,7 +44,7 @@ const ListView = ({ tasks, isLoading }) => {
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
                     {getStatusIcon(task.status)}
-                    <span className="text-sm font-semibold text-slate-200 group-hover:text-blue-400 transition-colors">{task.title}</span>
+                    <span className="text-sm font-semibold text-slate-200 group-hover:text-[#8B4513] transition-colors">{task.title}</span>
                   </div>
                 </td>
                 <td className="px-6 py-4">
@@ -59,8 +59,8 @@ const ListView = ({ tasks, isLoading }) => {
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-2">
-                    <div className="w-6 h-6 rounded-lg bg-slate-700 flex items-center justify-center text-[10px] text-white">
-                      <User size={12} />
+                    <div className="w-6 h-6 rounded-lg bg-[#8B4513]/20 flex items-center justify-center text-[10px] text-white">
+                      <User size={12} className="text-[#8B4513]" />
                     </div>
                     <span className="text-xs text-slate-400">{task.assigneeName || 'Unassigned'}</span>
                   </div>

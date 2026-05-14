@@ -51,9 +51,9 @@ const SettingsModal = ({ isOpen, onClose, theme, setTheme, initialTab = 'profile
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-[#020617]/80 backdrop-blur-md" onClick={onClose}></div>
+      <div className="absolute inset-0 bg-[#0F0906]/80 backdrop-blur-md" onClick={onClose}></div>
       
-      <div className="relative bg-[#1e293b]/90 backdrop-blur-3xl border border-white/10 w-full max-w-4xl h-[600px] rounded-[32px] shadow-2xl flex overflow-hidden animate-in fade-in zoom-in duration-200">
+      <div className="relative bg-[#1A120E]/90 backdrop-blur-3xl border border-white/10 w-full max-w-4xl h-[600px] rounded-[32px] shadow-2xl flex overflow-hidden animate-in fade-in zoom-in duration-200">
         {/* Sidebar */}
         <div className="w-64 border-r border-white/5 p-6 flex flex-col gap-2">
           <h2 className="text-xl font-bold text-white mb-6 px-2">Settings</h2>
@@ -63,7 +63,7 @@ const SettingsModal = ({ isOpen, onClose, theme, setTheme, initialTab = 'profile
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all ${
                 activeTab === tab.id 
-                  ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' 
+                  ? 'bg-[#8B4513] text-white shadow-lg shadow-amber-900/20' 
                   : 'text-slate-400 hover:bg-white/5 hover:text-slate-200'
               }`}
             >
@@ -76,7 +76,7 @@ const SettingsModal = ({ isOpen, onClose, theme, setTheme, initialTab = 'profile
               <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Workspace Plan</p>
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-white">Flowkit Pro</span>
-                <span className="text-[10px] bg-blue-600 text-white px-2 py-0.5 rounded-full">Active</span>
+                <span className="text-[10px] bg-[#8B4513] text-white px-2 py-0.5 rounded-full">Active</span>
               </div>
             </div>
           </div>
@@ -96,7 +96,7 @@ const SettingsModal = ({ isOpen, onClose, theme, setTheme, initialTab = 'profile
               <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-300">
                 <div className="flex items-center gap-6">
                   <div className="relative group">
-                    <div className="w-24 h-24 rounded-[32px] overflow-hidden border-4 border-white/5 bg-gradient-to-tr from-blue-600 to-indigo-600 shadow-xl flex items-center justify-center">
+                    <div className="w-24 h-24 rounded-[32px] overflow-hidden border-4 border-white/5 bg-gradient-to-tr from-[#8B4513] to-amber-900 shadow-xl flex items-center justify-center">
                       {profilePic ? (
                         <img src={`http://localhost:8080${profilePic}`} alt="Profile" className="w-full h-full object-cover" />
                       ) : (
@@ -110,7 +110,7 @@ const SettingsModal = ({ isOpen, onClose, theme, setTheme, initialTab = 'profile
                     </div>
                     <button 
                       onClick={() => fileInputRef.current?.click()}
-                      className="absolute -bottom-1 -right-1 p-2 bg-blue-600 rounded-xl text-white shadow-lg shadow-blue-500/30 hover:scale-110 transition-all active:scale-95">
+                      className="absolute -bottom-1 -right-1 p-2 bg-[#8B4513] rounded-xl text-white shadow-lg shadow-amber-900/30 hover:scale-110 transition-all active:scale-95">
                       <Camera size={14} />
                     </button>
                     <input 
@@ -130,7 +130,7 @@ const SettingsModal = ({ isOpen, onClose, theme, setTheme, initialTab = 'profile
                 <div className="grid grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Full Name</label>
-                    <input type="text" className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50" defaultValue="Prakhar" />
+                    <input type="text" className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#8B4513]/50" defaultValue="Prakhar" />
                   </div>
                   <div className="space-y-2">
                     <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Email Address</label>
@@ -140,7 +140,7 @@ const SettingsModal = ({ isOpen, onClose, theme, setTheme, initialTab = 'profile
 
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Bio</label>
-                  <textarea className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 h-24 resize-none" placeholder="Tell us about yourself..."></textarea>
+                  <textarea className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#8B4513]/50 h-24 resize-none" placeholder="Tell us about yourself..."></textarea>
                 </div>
               </div>
             )}
@@ -155,17 +155,17 @@ const SettingsModal = ({ isOpen, onClose, theme, setTheme, initialTab = 'profile
                   <div className="flex bg-black/20 p-1 rounded-xl">
                     <button 
                       onClick={() => setLocalTheme('dark')}
-                      className={`p-2 rounded-lg transition-all ${localTheme === 'dark' ? 'bg-blue-600 text-white shadow-lg' : 'text-slate-500 hover:text-white'}`}>
+                      className={`p-2 rounded-lg transition-all ${localTheme === 'dark' ? 'bg-[#8B4513] text-white shadow-lg' : 'text-slate-500 hover:text-white'}`}>
                       <Moon size={16} />
                     </button>
                     <button 
                       onClick={() => setLocalTheme('light')}
-                      className={`p-2 rounded-lg transition-all ${localTheme === 'light' ? 'bg-blue-600 text-white shadow-lg' : 'text-slate-500 hover:text-white'}`}>
+                      className={`p-2 rounded-lg transition-all ${localTheme === 'light' ? 'bg-[#8B4513] text-white shadow-lg' : 'text-slate-500 hover:text-white'}`}>
                       <Sun size={16} />
                     </button>
                     <button 
                       onClick={() => setLocalTheme('system')}
-                      className={`p-2 rounded-lg transition-all ${localTheme === 'system' ? 'bg-blue-600 text-white shadow-lg' : 'text-slate-500 hover:text-white'}`}>
+                      className={`p-2 rounded-lg transition-all ${localTheme === 'system' ? 'bg-[#8B4513] text-white shadow-lg' : 'text-slate-500 hover:text-white'}`}>
                       <Monitor size={16} />
                     </button>
                   </div>
@@ -192,7 +192,7 @@ const SettingsModal = ({ isOpen, onClose, theme, setTheme, initialTab = 'profile
                       <h4 className="text-sm font-bold text-white mb-1">Email Notifications</h4>
                       <p className="text-xs text-slate-500 font-medium">Receive daily summaries and task updates</p>
                     </div>
-                    <div className="w-12 h-6 bg-blue-600 rounded-full relative cursor-pointer">
+                    <div className="w-12 h-6 bg-[#8B4513] rounded-full relative cursor-pointer">
                       <div className="absolute right-1 top-1 w-4 h-4 bg-white rounded-full"></div>
                     </div>
                   </div>
@@ -212,7 +212,7 @@ const SettingsModal = ({ isOpen, onClose, theme, setTheme, initialTab = 'profile
                       <h4 className="text-sm font-bold text-white mb-1">Huddle Mentions</h4>
                       <p className="text-xs text-slate-500 font-medium">Notify when someone tags you in a chat</p>
                     </div>
-                    <div className="w-12 h-6 bg-blue-600 rounded-full relative cursor-pointer">
+                    <div className="w-12 h-6 bg-[#8B4513] rounded-full relative cursor-pointer">
                       <div className="absolute right-1 top-1 w-4 h-4 bg-white rounded-full"></div>
                     </div>
                   </div>
@@ -227,16 +227,16 @@ const SettingsModal = ({ isOpen, onClose, theme, setTheme, initialTab = 'profile
                   <div className="space-y-4">
                     <div className="space-y-2">
                       <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Current Password</label>
-                      <input type="password" placeholder="••••••••" className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50" />
+                      <input type="password" placeholder="••••••••" className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#8B4513]/50" />
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">New Password</label>
-                        <input type="password" placeholder="••••••••" className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50" />
+                        <input type="password" placeholder="••••••••" className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#8B4513]/50" />
                       </div>
                       <div className="space-y-2">
                         <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Confirm New Password</label>
-                        <input type="password" placeholder="••••••••" className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50" />
+                        <input type="password" placeholder="••••••••" className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-white text-sm focus:outline-none focus:ring-2 focus:ring-[#8B4513]/50" />
                       </div>
                     </div>
                   </div>
@@ -244,9 +244,9 @@ const SettingsModal = ({ isOpen, onClose, theme, setTheme, initialTab = 'profile
 
                 <div className="h-px bg-white/5 w-full"></div>
 
-                <div className="bg-blue-600/5 border border-blue-600/20 rounded-2xl p-6 flex items-center justify-between">
+                <div className="bg-[#8B4513]/5 border border-[#8B4513]/20 rounded-2xl p-6 flex items-center justify-between">
                   <div className="flex items-center gap-4">
-                    <div className="p-3 bg-blue-600/10 rounded-xl text-blue-400">
+                    <div className="p-3 bg-[#8B4513]/10 rounded-xl text-[#8B4513]">
                       <Shield size={20} />
                     </div>
                     <div>
@@ -254,7 +254,7 @@ const SettingsModal = ({ isOpen, onClose, theme, setTheme, initialTab = 'profile
                       <p className="text-xs text-slate-500 font-medium">Add an extra layer of security to your account</p>
                     </div>
                   </div>
-                  <button className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold transition-all">Enable</button>
+                  <button className="px-4 py-2 bg-[#8B4513] hover:bg-[#5D2E0A] text-white rounded-lg text-xs font-bold transition-all">Enable</button>
                 </div>
               </div>
             )}
@@ -267,7 +267,7 @@ const SettingsModal = ({ isOpen, onClose, theme, setTheme, initialTab = 'profile
                 setTheme(localTheme);
                 onClose();
               }}
-              className="px-8 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-bold shadow-lg shadow-blue-500/20 transition-all active:scale-[0.98]">
+              className="px-8 py-2.5 bg-[#8B4513] hover:bg-[#5D2E0A] text-white rounded-xl text-sm font-bold shadow-lg shadow-amber-900/20 transition-all active:scale-[0.98]">
               Save Changes
             </button>
           </div>

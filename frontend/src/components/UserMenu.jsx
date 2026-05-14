@@ -15,11 +15,11 @@ const UserMenu = ({ isOpen, onClose, onLogout, onProfileClick, onAddAccountClick
   return (
     <div className="absolute right-0 top-full mt-4 w-72 z-50 animate-in fade-in slide-in-from-top-4 duration-200">
       <div className={`backdrop-blur-3xl border rounded-[28px] shadow-2xl overflow-hidden ${
-        theme === 'light' ? 'bg-white/80 border-slate-200' : 'bg-[#1e293b]/90 border-white/10'
+        theme === 'light' ? 'bg-white/80 border-slate-200' : 'bg-[#1A120E]/90 border-white/10'
       }`}>
         {/* Header */}
         <div className={`p-5 border-b flex items-center gap-4 ${theme === 'light' ? 'border-slate-100 bg-slate-50/50' : 'border-white/5 bg-white/5'}`}>
-          <div className="w-12 h-12 rounded-2xl overflow-hidden bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white text-xl font-bold shadow-lg">
+          <div className="w-12 h-12 rounded-2xl overflow-hidden bg-gradient-to-tr from-[#8B4513] to-amber-900 flex items-center justify-center text-white text-xl font-bold shadow-lg">
             {avatarUrl ? (
               <img src={`http://localhost:8080${avatarUrl}`} alt="Profile" className="w-full h-full object-cover" />
             ) : (
@@ -43,7 +43,7 @@ const UserMenu = ({ isOpen, onClose, onLogout, onProfileClick, onAddAccountClick
             theme === 'light' ? 'text-slate-600 hover:bg-slate-100' : 'text-slate-300 hover:bg-white/5'
           }`}>
             <div className="flex items-center gap-3">
-              <User size={18} className="text-blue-500" />
+              <User size={18} className="text-[#8B4513]" />
               <span className="text-sm font-bold">My Profile</span>
             </div>
             <ExternalLink size={14} className="text-slate-500" />
@@ -57,7 +57,7 @@ const UserMenu = ({ isOpen, onClose, onLogout, onProfileClick, onAddAccountClick
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
             theme === 'light' ? 'text-slate-600 hover:bg-slate-100' : 'text-slate-300 hover:bg-white/5'
           }`}>
-            <UserPlus size={18} className="text-emerald-500" />
+            <UserPlus size={18} className="text-[#20B2AA]" />
             <span className="text-sm font-bold">Add Account</span>
           </button>
 
@@ -69,7 +69,7 @@ const UserMenu = ({ isOpen, onClose, onLogout, onProfileClick, onAddAccountClick
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
             theme === 'light' ? 'text-slate-600 hover:bg-slate-100' : 'text-slate-300 hover:bg-white/5'
           }`}>
-            <Shield size={18} className="text-purple-500" />
+            <Shield size={18} className="text-amber-600" />
             <span className="text-sm font-bold">Account Security</span>
           </button>
         </div>

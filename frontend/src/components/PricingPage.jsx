@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { CheckCircle2, Zap, Shield, Sparkles, Rocket } from 'lucide-react';
+import { CheckCircle, Zap, Shield, Sparkles } from 'lucide-react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
@@ -24,7 +24,7 @@ const PricingPage = () => {
       features: ["Stack Board access", "Unlimited projects", "Timer & Time tracking", "Nudge reminders", "Priority support"],
       cta: "Get Pro Now",
       highlighted: true,
-      buttonClass: "bg-blue-600 hover:bg-blue-500 text-white shadow-2xl shadow-blue-500/20"
+      buttonClass: "bg-[#8B4513] hover:bg-[#5D2E0A] text-white shadow-2xl shadow-amber-900/20"
     },
     {
       name: "Scale Kit",
@@ -38,11 +38,11 @@ const PricingPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#020617] text-slate-300 font-sans selection:bg-blue-500/30 overflow-x-hidden">
+    <div className="min-h-screen bg-[#0F0906] text-[#D7CCC8] font-sans selection:bg-[#8B4513]/30 overflow-x-hidden">
       {/* Background Glows */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-600/10 rounded-full blur-[120px] animate-pulse"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-purple-600/10 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-[#8B4513]/10 rounded-full blur-[120px] animate-pulse"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-[#20B2AA]/10 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '2s' }}></div>
       </div>
 
       <Navbar />
@@ -50,12 +50,12 @@ const PricingPage = () => {
       <main className="relative pt-40 pb-24 px-6">
         <div className="max-w-4xl mx-auto text-center mb-20">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8">
-            <Sparkles size={14} className="text-blue-400" />
-            <span className="text-xs font-bold tracking-widest uppercase text-blue-400">Flexible Plans</span>
+            <Sparkles size={14} className="text-[#8B4513]" />
+            <span className="text-xs font-bold tracking-widest uppercase text-[#8B4513]">Flexible Plans</span>
           </div>
           <h1 className="text-5xl md:text-7xl font-black text-white mb-8 tracking-tight">
             Simple, transparent <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">pricing.</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D7CCC8] via-amber-200 to-[#20B2AA]">pricing.</span>
           </h1>
           
           {/* Toggle */}
@@ -65,10 +65,10 @@ const PricingPage = () => {
               onClick={() => setAnnual(!annual)}
               className="relative inline-flex h-8 w-14 items-center rounded-full bg-white/5 border border-white/10 transition-colors focus:outline-none"
             >
-              <div className={`h-6 w-6 rounded-full bg-blue-600 shadow-lg transform transition-transform ${annual ? 'translate-x-7' : 'translate-x-1'}`} />
+              <div className={`h-6 w-6 rounded-full bg-[#8B4513] shadow-lg transform transition-transform ${annual ? 'translate-x-7' : 'translate-x-1'}`} />
             </button>
-            <span className={`text-sm font-bold flex items-center gap-2 ${annual ? 'text-white' : 'text-slate-500'}`}>
-              Annually <span className="text-[10px] text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded-full border border-emerald-400/20">Save 20%</span>
+            <span className={`text-sm font-bold flex items-center gap-2 ${annual ? 'text-white' : 'text-[#8D6E63]'}`}>
+              Annually <span className="text-[10px] text-[#20B2AA] bg-[#20B2AA]/10 px-2 py-0.5 rounded-full border border-[#20B2AA]/20">Save 20%</span>
             </span>
           </div>
         </div>
@@ -78,11 +78,11 @@ const PricingPage = () => {
           {tiers.map((tier, index) => (
             <div key={index} className={`group relative flex flex-col p-10 rounded-[40px] border transition-all duration-500 ${
               tier.highlighted 
-                ? 'bg-[#0f172a] border-blue-500/50 shadow-2xl scale-105 z-10' 
+                ? 'bg-[#1A120E] border-[#8B4513]/50 shadow-2xl scale-105 z-10' 
                 : 'bg-white/[0.02] border-white/5 hover:border-white/10 hover:bg-white/[0.04]'
             }`}>
               {tier.highlighted && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-[10px] font-black uppercase tracking-[0.2em] py-1.5 px-4 rounded-full shadow-xl">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#8B4513] text-white text-[10px] font-black uppercase tracking-[0.2em] py-1.5 px-4 rounded-full shadow-xl">
                   Most Popular
                 </div>
               )}
@@ -101,8 +101,8 @@ const PricingPage = () => {
 
               <div className="space-y-5 mb-10">
                 {tier.features.map((feature, fIndex) => (
-                  <div key={fIndex} className="flex items-center gap-3 text-sm font-medium text-slate-400">
-                    <CheckCircle2 size={18} className="text-emerald-500 shrink-0" />
+                  <div key={fIndex} className="flex items-center gap-3 text-sm font-medium text-[#D7CCC8]">
+                    <CheckCircle size={18} className="text-[#20B2AA] shrink-0" />
                     <span>{feature}</span>
                   </div>
                 ))}
@@ -117,7 +117,7 @@ const PricingPage = () => {
 
         {/* FAQ Section Placeholder */}
         <div className="mt-40 text-center">
-          <Shield className="text-blue-500/20 mx-auto mb-6" size={48} />
+          <Shield className="text-[#8B4513]/20 mx-auto mb-6" size={48} />
           <p className="text-slate-500 font-bold mb-2">Secure Payments</p>
           <p className="text-xs text-slate-600">Encrypted by Stripe. Cancel anytime.</p>
         </div>

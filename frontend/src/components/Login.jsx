@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { LogIn, Mail, Lock, ArrowRight } from 'lucide-react';
+import logo from '../assets/logo.png';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -30,16 +31,16 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0f172a] relative overflow-hidden font-sans">
+    <div className="min-h-screen flex items-center justify-center bg-[#0F0906] relative overflow-hidden font-sans">
       {/* Background Orbs */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/20 rounded-full blur-[120px] animate-pulse"></div>
-      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/20 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }}></div>
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#8B4513]/20 rounded-full blur-[120px] animate-pulse"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#20B2AA]/20 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }}></div>
 
       <div className="relative z-10 w-full max-w-md px-6">
         <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-8 rounded-3xl shadow-2xl">
           <div className="flex flex-col items-center mb-8">
-            <div className="w-16 h-16 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/20 mb-4">
-              <LogIn className="text-white w-8 h-8" />
+            <div className="w-16 h-16 bg-gradient-to-tr from-[#8B4513] to-amber-900 rounded-2xl flex items-center justify-center shadow-lg shadow-amber-900/20 mb-4 overflow-hidden p-2">
+              <img src={logo} alt="Flowkit" className="w-full h-full object-contain" />
             </div>
             <h1 className="text-3xl font-bold text-white tracking-tight">Welcome Back</h1>
             <p className="text-slate-400 mt-2 text-center">Login to your Flowkit workspace</p>
@@ -101,7 +102,7 @@ const Login = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold py-3 px-4 rounded-xl shadow-lg shadow-blue-500/25 flex items-center justify-center gap-2 transition-all transform active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed group"
+              className="w-full bg-gradient-to-r from-[#8B4513] to-amber-900 hover:from-[#5D2E0A] hover:to-amber-800 text-white font-semibold py-3 px-4 rounded-xl shadow-lg shadow-amber-900/25 flex items-center justify-center gap-2 transition-all transform active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed group"
             >
               {isLoading ? (
                 <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>

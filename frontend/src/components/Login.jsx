@@ -60,9 +60,48 @@ const Login = () => {
   };
 
   const handleSocialLogin = (platform) => {
-    console.log(`Logging in with ${platform}`);
-    // Implement social login logic here
+    if (platform === 'facebook') {
+      window.FB.login((response) => {
+        if (response.authResponse) {
+          const accessToken = response.authResponse.accessToken;
+          setIsLoading(true);
+          axios.post('http://localhost:8080/api/v1/auth/facebook', { accessToken })
+            .then(res => {
+              localStorage.setItem('token', res.data.token);
+              // You might want to get email from FB as well, but for now:
+              localStorage.setItem('userEmail', 'Facebook User'); 
+              navigate('/', { replace: true });
+            })
+            .catch(err => {
+              setError('Facebook authentication failed. Please try again.');
+            })
+            .finally(() => setIsLoading(false));
+        } else {
+          setError('Facebook login cancelled.');
+        }
+      }, { scope: 'email,public_profile' });
+    }
   };
+
+  // Initialize Facebook SDK
+  React.useEffect(() => {
+    window.fbAsyncInit = function() {
+      window.FB.init({
+        appId      : import.meta.env.VITE_FACEBOOK_APP_ID, 
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v18.0'
+      });
+    };
+
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  }, []);
 
   return (
     <AuthLayout 

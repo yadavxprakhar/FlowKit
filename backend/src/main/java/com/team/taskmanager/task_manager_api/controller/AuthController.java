@@ -31,4 +31,12 @@ public class AuthController {
     ) {
         return ResponseEntity.ok(service.authenticate(request));
     }
+
+    @PostMapping("/facebook")
+    public ResponseEntity<AuthenticationResponse> facebookLogin(
+            @RequestBody com.team.taskmanager.task_manager_api.dto.FacebookLoginRequest request
+    ) {
+        return ResponseEntity.ok(service.facebookLogin(request.getAccessToken()));
+    }
 }
+

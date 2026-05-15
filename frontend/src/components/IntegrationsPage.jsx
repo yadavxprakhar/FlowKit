@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
-import { MessageSquare, Code, Cloud, Video, Mail, Calendar, Database, ArrowRight, Sparkles, Zap, Lock } from 'lucide-react';
+import { MessageSquare, Code, Cloud, Video, Mail, Calendar, Database, ArrowRight, Sparkles, Zap, Lock, X, Send, Loader2 } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import axios from 'axios';
 
 const IntegrationsPage = () => {
   const navigate = useNavigate();
   const isLoggedIn = !!localStorage.getItem('token');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error'
+  const [formData, setFormData] = useState({
+    integrationName: '',
+    description: '',
+    userEmail: localStorage.getItem('userEmail') || ''
+  });
 
   const integrations = [
     { name: "Slack",            providerKey: "SLACK",            description: "Send Nudges and receive Huddle updates directly in your Slack channels.", icon: MessageSquare, color: "text-[#E01E5A]", bg: "bg-[#E01E5A]/10" },
@@ -24,6 +34,25 @@ const IntegrationsPage = () => {
       navigate(`/dashboard/integrations?provider=${providerKey}`);
     } else {
       navigate('/login', { state: { from: `/dashboard/integrations?provider=${providerKey}` } });
+    }
+  };
+
+  const handleRequestSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+    try {
+      await axios.post('http://localhost:8080/api/v1/integrations/request', formData);
+      setSubmitStatus('success');
+      setTimeout(() => {
+        setIsModalOpen(false);
+        setSubmitStatus(null);
+        setFormData({ ...formData, integrationName: '', description: '' });
+      }, 2000);
+    } catch (error) {
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -107,7 +136,10 @@ const IntegrationsPage = () => {
             <h2 className="text-4xl font-black text-white mb-6 tracking-tight">Build your own connection.</h2>
             <p className="text-lg text-[#D7CCC8] mb-10 max-w-xl mx-auto">Use our robust REST API to build custom connections for your internal tools. The possibilities are endless.</p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <button className="px-10 py-4 bg-[#8B4513] hover:bg-[#5D2E0A] text-white rounded-2xl font-black transition-all hover:scale-105 active:scale-95 shadow-2xl shadow-amber-900/20 flex items-center justify-center gap-2">
+              <button 
+                onClick={() => setIsModalOpen(true)}
+                className="px-10 py-4 bg-[#8B4513] hover:bg-[#5D2E0A] text-white rounded-2xl font-black transition-all hover:scale-105 active:scale-95 shadow-2xl shadow-amber-900/20 flex items-center justify-center gap-2"
+              >
                 <Zap size={18} />
                 Request Custom Integration
               </button>
@@ -118,6 +150,101 @@ const IntegrationsPage = () => {
             </div>
           </div>
         </section>
+
+        {/* Request Modal */}
+        <AnimatePresence>
+          {isModalOpen && (
+            <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setIsModalOpen(false)}
+                className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+              />
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                className="relative w-full max-w-lg bg-[#1A120E] border border-white/10 rounded-[32px] p-8 shadow-2xl overflow-hidden"
+              >
+                <div className="absolute top-0 right-0 p-6">
+                  <button onClick={() => setIsModalOpen(false)} className="text-slate-500 hover:text-white transition-colors">
+                    <X size={24} />
+                  </button>
+                </div>
+
+                <div className="mb-8">
+                  <div className="w-12 h-12 bg-[#8B4513]/20 text-[#8B4513] rounded-xl flex items-center justify-center mb-4">
+                    <Zap size={24} />
+                  </div>
+                  <h3 className="text-3xl font-black text-white tracking-tight">Request Integration</h3>
+                  <p className="text-slate-400 mt-2 font-medium">Tell us what you'd like to see next in Flowkit.</p>
+                </div>
+
+                <form onSubmit={handleRequestSubmit} className="space-y-6">
+                  <div>
+                    <label className="block text-sm font-bold text-slate-300 mb-2">Integration Name</label>
+                    <input 
+                      type="text"
+                      required
+                      placeholder="e.g. Trello, Microsoft Teams"
+                      className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-[#8B4513]/50 focus:border-[#8B4513]/50 transition-all"
+                      value={formData.integrationName}
+                      onChange={(e) => setFormData({...formData, integrationName: e.target.value})}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-slate-300 mb-2">How would you use it?</label>
+                    <textarea 
+                      required
+                      rows={4}
+                      placeholder="Briefly describe your use case..."
+                      className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-[#8B4513]/50 focus:border-[#8B4513]/50 transition-all resize-none"
+                      value={formData.description}
+                      onChange={(e) => setFormData({...formData, description: e.target.value})}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-slate-300 mb-2">Contact Email</label>
+                    <input 
+                      type="email"
+                      required
+                      placeholder="your@email.com"
+                      className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-[#8B4513]/50 focus:border-[#8B4513]/50 transition-all"
+                      value={formData.userEmail}
+                      onChange={(e) => setFormData({...formData, userEmail: e.target.value})}
+                    />
+                  </div>
+
+                  {submitStatus === 'success' && (
+                    <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 p-4 rounded-2xl text-sm font-bold flex items-center gap-2">
+                       <CheckCircle size={16} /> Request sent successfully!
+                    </div>
+                  )}
+                  {submitStatus === 'error' && (
+                    <div className="bg-rose-500/10 border border-rose-500/20 text-rose-400 p-4 rounded-2xl text-sm font-bold flex items-center gap-2">
+                       <X size={16} /> Something went wrong. Try again.
+                    </div>
+                  )}
+
+                  <button 
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full bg-[#8B4513] hover:bg-[#5D2E0A] text-white font-black py-4 rounded-2xl shadow-xl shadow-amber-900/20 transition-all flex items-center justify-center gap-3 active:scale-95 disabled:opacity-50"
+                  >
+                    {isSubmitting ? <Loader2 size={20} className="animate-spin" /> : (
+                      <>
+                        <Send size={18} />
+                        Submit Request
+                      </>
+                    )}
+                  </button>
+                </form>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
       </main>
 
       <Footer />
@@ -126,4 +253,5 @@ const IntegrationsPage = () => {
 };
 
 export default IntegrationsPage
+
 

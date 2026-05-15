@@ -11,6 +11,7 @@ import TermsPage from './components/TermsPage';
 import SecurityPage from './components/SecurityPage';
 import Login from './components/Login';
 import Register from './components/Register';
+import PricingPage from './components/PricingPage';
 import Dashboard from './components/Dashboard';
 import AppIntegrationsPage from './components/AppIntegrationsPage';
 import ApiDocsPage from './components/ApiDocsPage';
@@ -32,6 +33,7 @@ function App() {
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/terms" element={<TermsPage />} />
         <Route path="/security" element={<SecurityPage />} />
+        <Route path="/pricing" element={<PricingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route 

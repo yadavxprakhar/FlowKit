@@ -25,8 +25,9 @@ const Footer = () => {
           <h4 className="text-white font-bold tracking-tight">Product</h4>
           <div className="flex flex-col gap-4">
             <Link to="/features" className="text-[#D7CCC8] hover:text-white transition-colors">Features</Link>
-            <Link to="/pricing" className="text-[#D7CCC8] hover:text-white transition-colors">Pricing</Link>
+            <Link to="/#pricing" className="text-[#D7CCC8] hover:text-white transition-colors">Pricing</Link>
             <Link to="/integrations" className="text-[#D7CCC8] hover:text-white transition-colors">Integrations</Link>
+
           </div>
         </div>
 

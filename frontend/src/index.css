@@ -49,29 +49,49 @@
   --shadow-xl: 0 20px 25px rgba(0,0,0,0.15);
 }
 
+@layer utilities {
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-2xl border border-white/10;
+  }
+  
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-amber-200 to-[#8B4513];
+  }
+}
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color-scheme: light dark;
+  color-scheme: dark;
 }
 
 body {
   margin: 0;
-  background-color: var(--color-bg-light);
-  color: var(--color-text-secondary-light);
+  background-color: #0F0906;
+  color: #D7CCC8;
+}
+
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #030014;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2D1E15;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3D2E25;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: var(--color-text-primary-light);
+  color: var(--color-text-primary-dark);
 }
 
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: var(--color-bg-dark);
-    color: var(--color-text-secondary-dark);
-  }
-  h1, h2, h3, h4, h5, h6 {
-    color: var(--color-text-primary-dark);
-  }
-}

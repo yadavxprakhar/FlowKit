@@ -1,16 +1,41 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import { UserPlus, Mail, Lock, User, ArrowRight } from 'lucide-react';
-import logo from '../assets/logo.png';
+import { Mail, Lock, User, ArrowRight, Loader2 } from 'lucide-react';
+import AuthLayout from './AuthLayout';
+import { motion } from 'framer-motion';
+
+const FacebookIcon = ({ size = 20, ...props }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+  </svg>
+);
 
 const Register = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -18,12 +43,12 @@ const Register = () => {
     setError('');
     try {
       const response = await axios.post('http://localhost:8080/api/v1/auth/register', {
-        name,
-        email,
-        password,
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
       });
       localStorage.setItem('token', response.data.token);
-      localStorage.setItem('userEmail', email);
+      localStorage.setItem('userEmail', formData.email);
       navigate('/', { replace: true });
     } catch (err) {
       setError('Registration failed. This email might already be in use.');
@@ -32,118 +57,136 @@ const Register = () => {
     }
   };
 
+  const handleSocialLogin = (platform) => {
+    console.log(`Registering with ${platform}`);
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0F0906] relative overflow-hidden font-sans">
-      {/* Background Orbs */}
-      <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#8B4513]/20 rounded-full blur-[120px] animate-pulse"></div>
-      <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#20B2AA]/20 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }}></div>
-
-      <div className="relative z-10 w-full max-w-md px-6 py-12">
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 p-8 rounded-3xl shadow-2xl">
-          <div className="flex flex-col items-center mb-8">
-            <div className="w-16 h-16 bg-gradient-to-tr from-[#8B4513] to-amber-900 rounded-2xl flex items-center justify-center shadow-lg shadow-amber-900/20 mb-4 overflow-hidden p-2">
-              <img src={logo} alt="Flowkit" className="w-full h-full object-contain" />
-            </div>
-            <h1 className="text-3xl font-bold text-white tracking-tight">Create Account</h1>
-            <p className="text-slate-400 mt-2 text-center">Get started with your Flowkit workspace</p>
+    <AuthLayout 
+      title="Create Account" 
+      subtitle="Join thousands of teams using Flowkit"
+    >
+      {/* Social Register Section */}
+      <div className="grid grid-cols-1 gap-4 mb-8">
+        <button
+          onClick={() => handleSocialLogin('facebook')}
+          className="w-full flex items-center justify-center gap-3 bg-white/5 border border-white/10 hover:bg-white/10 text-white font-medium py-3 px-4 rounded-2xl transition-all duration-300 group"
+        >
+          <div className="bg-[#1877F2] p-1.5 rounded-lg">
+            <FacebookIcon size={18} fill="white" />
           </div>
+          <span>Sign up with Facebook</span>
+        </button>
+      </div>
 
-          <form onSubmit={handleRegister} className="space-y-5">
-            <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2" htmlFor="name">
-                Full Name
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500">
-                  <User size={18} />
-                </div>
-                <input
-                  type="text"
-                  id="name"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-11 pr-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all"
-                  placeholder="John Doe"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                />
-              </div>
+      <div className="relative flex items-center mb-8">
+        <div className="flex-grow border-t border-white/10"></div>
+        <span className="flex-shrink mx-4 text-slate-500 text-sm font-medium uppercase tracking-wider">or register with</span>
+        <div className="flex-grow border-t border-white/10"></div>
+      </div>
+
+      <form onSubmit={handleRegister} className="space-y-5">
+        <div>
+          <label className="block text-sm font-medium text-slate-300 mb-2" htmlFor="name">
+            Full Name
+          </label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500">
+              <User size={20} />
             </div>
-
-            <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2" htmlFor="email">
-                Email Address
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500">
-                  <Mail size={18} />
-                </div>
-                <input
-                  type="email"
-                  id="email"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-11 pr-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all"
-                  placeholder="name@company.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2" htmlFor="password">
-                Password
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500">
-                  <Lock size={18} />
-                </div>
-                <input
-                  type="password"
-                  id="password"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-11 pr-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all"
-                  placeholder="Min. 8 characters"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
-            </div>
-
-            {error && (
-              <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-sm px-4 py-3 rounded-xl flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-red-500 rounded-full"></span>
-                {error}
-              </div>
-            )}
-
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full bg-gradient-to-r from-[#8B4513] to-amber-900 hover:from-[#5D2E0A] hover:to-amber-800 text-white font-semibold py-3 px-4 rounded-xl shadow-lg shadow-amber-900/25 flex items-center justify-center gap-2 transition-all transform active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed group mt-2"
-            >
-              {isLoading ? (
-                <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-              ) : (
-                <>
-                  Create Account
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </>
-              )}
-            </button>
-          </form>
-
-          <div className="mt-8 text-center border-t border-white/5 pt-6">
-            <p className="text-slate-400 text-sm">
-              Already have an account?{' '}
-              <Link to="/login" className="text-indigo-400 hover:text-indigo-300 font-semibold transition-colors">
-                Sign in instead
-              </Link>
-            </p>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 transition-all duration-300"
+              placeholder="John Doe"
+              value={formData.name}
+              onChange={handleInputChange}
+              required
+            />
           </div>
         </div>
+
+        <div>
+          <label className="block text-sm font-medium text-slate-300 mb-2" htmlFor="email">
+            Email Address
+          </label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500">
+              <Mail size={20} />
+            </div>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 transition-all duration-300"
+              placeholder="name@company.com"
+              value={formData.email}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-slate-300 mb-2" htmlFor="password">
+            Password
+          </label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500">
+              <Lock size={20} />
+            </div>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 transition-all duration-300"
+              placeholder="Min. 8 characters"
+              value={formData.password}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+        </div>
+
+        {error && (
+          <motion.div 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-red-500/10 border border-red-500/20 text-red-400 text-sm px-4 py-3 rounded-2xl flex items-center gap-3"
+          >
+            <div className="w-1.5 h-1.5 bg-red-500 rounded-full"></div>
+            {error}
+          </motion.div>
+        )}
+
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="w-full bg-gradient-to-r from-[#8B4513] to-amber-700 hover:from-[#5D2E0A] hover:to-amber-600 text-white font-bold py-4 px-4 rounded-2xl shadow-xl shadow-amber-900/20 flex items-center justify-center gap-3 transition-all duration-300 transform active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed group mt-2"
+        >
+          {isLoading ? (
+            <Loader2 className="w-5 h-5 animate-spin" />
+          ) : (
+            <>
+              <span>Create Account</span>
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </>
+          )}
+        </button>
+      </form>
+
+      <div className="mt-10 text-center">
+        <p className="text-slate-400 font-medium">
+          Already have an account?{' '}
+          <Link to="/login" className="text-amber-400 hover:text-amber-300 font-bold transition-colors">
+            Sign In
+          </Link>
+        </p>
       </div>
-    </div>
+    </AuthLayout>
   );
 };
 
 export default Register;
+

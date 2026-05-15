@@ -254,5 +254,5 @@ Twitter: @flowkit
  Mobile app (React Native)
 ```
 <div align="center">
-<sub> Built with ❤️ by the Flowkit team. </sub>
+<sub> Built with ❤️ by Prakhar. </sub>
 </div>

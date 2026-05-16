@@ -183,9 +183,13 @@ const ApiDocsPage = () => {
               <p className="text-slate-400 mb-8 max-w-xl mx-auto">
                 Can't find what you're looking for? Reach out to our developer support team at <span className="text-[#8B4513] font-bold">work.prakharyadav@gmail.com</span>
               </p>
-              <button className="px-8 py-3 bg-[#8B4513] hover:bg-[#5D2E0A] text-white rounded-xl font-black transition-all shadow-xl shadow-amber-900/20">
+              <a 
+                href="mailto:work.prakharyadav@gmail.com"
+                className="inline-block px-8 py-3 bg-[#8B4513] hover:bg-[#5D2E0A] text-white rounded-xl font-black transition-all shadow-xl shadow-amber-900/20"
+              >
                 Contact Developer Support
-              </button>
+              </a>
+
             </section>
 
           </div>

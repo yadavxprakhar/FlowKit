@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import AboutBackground from './AboutBackground';
 import { Target, Heart, Zap, Shield, Users, Sparkles } from 'lucide-react';
 
 const AboutPage = () => {
@@ -12,7 +13,10 @@ const AboutPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0F0906] text-[#D7CCC8] font-sans selection:bg-[#8B4513]/30 overflow-x-hidden">
+    <div className="min-h-screen bg-[#0F0906] text-[#D7CCC8] font-sans selection:bg-[#8B4513]/30 overflow-x-hidden relative">
+      {/* Dynamic Animated Concentric Orbits Background */}
+      <AboutBackground />
+
       {/* Background Glows */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-[#8B4513]/10 rounded-full blur-[120px] animate-pulse"></div>
